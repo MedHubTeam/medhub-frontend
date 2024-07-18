@@ -2,6 +2,7 @@ import '../../assets/styles/LoginForm.css'
 import React, { useState, useCallback, useEffect } from 'react'
 import loginService from '../../services/loginService.js'
 import { useNavigate } from 'react-router-dom'
+import medhub_logo from '../../assets/images/medhub-logo-transparent.png'
 
 export default function LoginForm() {
     const [loginResponse, setLoginResponse] = useState(null)
@@ -18,17 +19,18 @@ export default function LoginForm() {
 
     useEffect(() => {
         if (loginResponse) {
-            if(loginResponse['status'] === 'successful') {
+            if (loginResponse['status'] === 'successful') {
                 navigate('/home')
-            }else{
+            } else {
                 alert('Wrong login credentials')
             }
         }
-    }, [loginResponse])
+    }, [loginResponse, navigate])
 
     return (
         <div className="modern-login-container">
             <div className="login-form">
+                <img src={medhub_logo} className="App-logo" alt="MedHub logo" />
                 <h1>Welcome back!</h1>
                 <p>Enter to get unlimited access to data & information.</p>
                 <form onSubmit={onLoginSubmit}>
@@ -48,16 +50,10 @@ export default function LoginForm() {
                         placeholder="Enter your password"
                         required
                     />
-                    <div className="form-options">
-                        <label>
-                            <input type="checkbox" /> Remember me
-                        </label>
-                        <a href="#">Forgot your password?</a>
-                    </div>
                     <button
                         type="submit"
                         data-testid="submitLoginInputButton">
-            Log In
+                        Log In
                     </button>
                     <p>Don’t have an account? <a href="#">Register here</a></p>
                 </form>

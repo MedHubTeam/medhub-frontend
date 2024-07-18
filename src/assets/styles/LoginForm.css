@@ -3,7 +3,6 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-color: #f0f0f5;
 }
 
 .login-form {
@@ -71,22 +70,12 @@
   background-color: #0056b3;
 }
 
-.alternative-login {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.google-login {
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.google-login:hover {
-  background-color: #357ae8;
+.App-logo {
+  height: 80px; /* Adjust height as needed */
+  margin-bottom: 20px; /* Adjust margin as needed */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .login-artwork {

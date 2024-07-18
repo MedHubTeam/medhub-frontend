@@ -10,7 +10,7 @@ function App() {
       <header className="App-header">
         <img src={medhub_logo} className="App-logo" alt="logo" data-testid="loginPageImage"/>
         <p>
-          Welcome to the best social network for medicine!
+           Welcome to the best social network for medicine!
         </p>
         <UserLoginForm/>
       </header>

@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import medhub_logo from './assets/images/medhub-logo-transparent.png';
+import './assets/styles/App.css';
+import React from 'react';
+import UserLoginForm from './components/loginPage/UserLoginForm.js';
 
 function App() {
   return (
     <div className="App">
+       <h1>Welcome!</h1>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={medhub_logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Welcome to the best social network for medicine!
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <UserLoginForm/>
       </header>
     </div>
-  );
+  );  
 }
 
 export default App;

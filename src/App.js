@@ -8,7 +8,7 @@ function App() {
     <div className="App">
        <h1>Welcome!</h1>
       <header className="App-header">
-        <img src={medhub_logo} className="App-logo" alt="logo" />
+        <img src={medhub_logo} className="App-logo" alt="logo" data-testid="loginPageImage"/>
         <p>
           Welcome to the best social network for medicine!
         </p>

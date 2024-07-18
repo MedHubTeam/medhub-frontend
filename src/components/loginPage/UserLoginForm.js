@@ -16,16 +16,13 @@ export default function LoginForm() {
 
   return (
     <div>
-        <div className="test"></div>
-        <form onSubmit={onLoginSubmit}>
-          <label>
-            Username: <input username = "username"/>
-          </label>
-          <label>
-            Password: <input password = "password" />
-          </label>
-          <button type= "submit">Submit</button>
-        </form>
+        <div className="LoginForm">
+            <form onSubmit={onLoginSubmit}>
+                <input data-testid="usernameLoginInput" placeholder="Enter your username" />
+                <input type="password" data-testid="passwordLoginInput" placeholder="Enter your password" />
+                <button type="submit" data-testid="submitLoginInputButton">Submit</button>
+            </form>
+        </div>
     </div>
   );
 }

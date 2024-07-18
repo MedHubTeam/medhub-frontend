@@ -1,3 +1,26 @@
+/* Add these styles to make the button look like a link */
+.link-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.link-button:hover {
+  text-decoration: none;
+}
+
+/* Existing styles */
+.App-logo {
+  height: 80px; /* Adjust height as needed */
+  margin-bottom: 20px; /* Adjust margin as needed */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .modern-login-container {
   display: flex;
   min-height: 100vh;
@@ -48,15 +71,6 @@
   margin-bottom: 20px;
 }
 
-.form-options a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.form-options a:hover {
-  text-decoration: underline;
-}
-
 .login-form button {
   padding: 10px;
   background-color: #007bff;
@@ -70,13 +84,7 @@
   background-color: #0056b3;
 }
 
-.App-logo {
-  height: 80px; /* Adjust height as needed */
-  margin-bottom: 20px; /* Adjust margin as needed */
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
+
 
 .login-artwork {
   /* right side artwork */

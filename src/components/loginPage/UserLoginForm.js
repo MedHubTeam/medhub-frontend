@@ -19,7 +19,7 @@ export default function LoginForm() {
 
     useEffect(() => {
         if (loginResponse) {
-            if (loginResponse['status'] === 'successful') {
+            if (loginResponse.status === 'successful') {
                 navigate('/home')
             } else {
                 alert('Wrong login credentials')
@@ -55,7 +55,7 @@ export default function LoginForm() {
                         data-testid="submitLoginInputButton">
                         Log In
                     </button>
-                    <p>Don’t have an account? <a href="#">Register here</a></p>
+                    <p>Don’t have an account? <a href="/register">Register here</a></p> {/* Provide a valid href value */}
                 </form>
             </div>
             <div className="login-artwork">

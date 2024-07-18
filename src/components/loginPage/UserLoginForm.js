@@ -1,15 +1,30 @@
 import '../../assets/styles/LoginForm.css'
-import React, { useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import loginService from '../../services/loginService.js'
+import { useNavigate } from 'react-router-dom'
 
 export default function LoginForm() {
+    const [loginResponse, setLoginResponse] = useState(null)
+    const navigate = useNavigate()
+
     const onLoginSubmit = useCallback(async (event) => {
         event.preventDefault()
         const target = event.target
         const identifier = target[0].value
         const password = target[1].value
-        console.log(await loginService(identifier, password))
+        const response = await loginService(identifier, password)
+        setLoginResponse(response)
     }, [])
+
+    useEffect(() => {
+        if (loginResponse) {
+            if(loginResponse['status'] === 'successful') {
+                navigate('/home')
+            }else{
+                alert('Wrong login credentials')
+            }
+        }
+    }, [loginResponse])
 
     return (
         <div className="modern-login-container">

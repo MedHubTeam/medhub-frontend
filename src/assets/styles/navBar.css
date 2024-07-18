@@ -1,0 +1,22 @@
+.nav {
+    padding: 10px;
+    background: #333;
+    color: #fff;
+  }
+  
+  .nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav li {
+    margin: 0 10px;
+  }
+  
+  .nav a {
+    color: #fff;
+    text-decoration: none;
+  }

@@ -1,42 +1,39 @@
+// Import react library and react testing library
 import React from 'react'
-import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
+
+// Import helper functions to use for testing
+import { elementExists, RouterRender } from './testHelperFunctions'
+
+// Import Pages and components to run tests on
 import NavBar from '../components/navBar'
-import { BrowserRouter } from 'react-router-dom'
 import HomePage from '../context/homePage'
 import AboutPage from '../context/aboutPage'
 import LoginPage from '../context/loginPage'
 
-const RouterRender = (element) => {
-    render(
-        <BrowserRouter>
-            {element}
-        </BrowserRouter>
-    )
-}
 
 describe('Checks Nav Bar Buttons', () => {
     test('Checks "Home" exists', () => {
         RouterRender(<NavBar />)
-        expect(screen.getByTestId('homeNavButton')).toBeInTheDocument()
+        expect(elementExists('homeNavButton')).toBe(true)
     })
     test('Checks "About" exists', () => {
         RouterRender(<NavBar />)
-        expect(screen.getByTestId('homeNavButton')).toBeInTheDocument()
+        expect(elementExists('homeNavButton')).toBe(true)
     })
 })
 
 describe('Checks Nav Bar Exists in Pages', () => {
     test('Checks NavBar exists in "Home"', () => {
         RouterRender(<HomePage />)
-        expect(screen.getByTestId('navBarWrapper')).toBeInTheDocument()
+        expect(elementExists('homeNavButton')).toBe(true)
     })
     test('Checks NavBar exists in "About"', () => {
         RouterRender(<AboutPage />)
-        expect(screen.getByTestId('navBarWrapper')).toBeInTheDocument()
+        expect(elementExists('homeNavButton')).toBe(true)
     })
     test('Checks NavBar not in "Login"', () => {
         RouterRender(<LoginPage />)
-        expect(screen.queryByTestId('navBarWrapper')).not.toBeInTheDocument()
+        expect(elementExists('homeNavButton')).toBe(false)
     })
 })

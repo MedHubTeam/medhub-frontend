@@ -4,13 +4,13 @@ import '../assets/styles/navBar.css'
 
 const NavBar = () => {
     return (
-        <nav className="nav">
+        <nav className="nav" data-testid="navBarWrapper">
             <ul>
                 <li>
-                    <Link to="/home">Home</Link>
+                    <Link to="/home" data-testid="homeNavButton">Home</Link>
                 </li>
                 <li>
-                    <Link to="/about">About Us</Link>
+                    <Link to="/about" data-testid="aboutNavButton">About Us</Link>
                 </li>
             </ul>
         </nav>

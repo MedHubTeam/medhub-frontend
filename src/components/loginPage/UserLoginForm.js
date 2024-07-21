@@ -1,7 +1,13 @@
-import '../../assets/styles/LoginForm.css'
+// Import react libraries
 import React, { useState, useCallback, useEffect } from 'react'
-import loginService from '../../services/loginService.js'
 import { useNavigate } from 'react-router-dom'
+
+// Import services and helper functions
+import loginService from '../../services/loginService.js'
+import { loggedInUser } from '../../services/loggedUser.js'
+
+// Import css and design files
+import '../../assets/styles/LoginForm.css'
 import medhub_logo from '../../assets/images/medhub-logo-transparent.png'
 
 export default function LoginForm() {
@@ -20,6 +26,7 @@ export default function LoginForm() {
     useEffect(() => {
         if (loginResponse) {
             if (loginResponse.status === 'successful') {
+                loggedInUser.setUserLogin(loginResponse)
                 navigate('/home')
             } else {
                 alert('Wrong login credentials')

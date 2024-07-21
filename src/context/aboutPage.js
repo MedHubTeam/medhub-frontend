@@ -1,5 +1,11 @@
+// Import react libraries
 import React, { useState, useEffect } from 'react'
+
+// Import services and helper functions
 import { getAboutContent } from '../services/contentService'
+import { loggedInUser } from '../services/loggedUser'
+
+// Import jsx components
 import NavBar from '../components/navBar'
 
 const AboutPage = () => {
@@ -9,6 +15,7 @@ const AboutPage = () => {
         const fetchContent = async () => {
             const data = await getAboutContent()
             setContent(data)
+            loggedInUser.printUser()
         }
   
         fetchContent()

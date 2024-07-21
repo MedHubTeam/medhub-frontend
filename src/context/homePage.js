@@ -1,4 +1,7 @@
+// Import react libraries
 import React from 'react'
+
+// Import jsx components
 import NavBar from '../components/navBar'
 
 function HomePage(){

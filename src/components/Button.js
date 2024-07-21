@@ -1,3 +1,4 @@
+// Import react libraries
 import React from 'react'
 
 const Button = ({ onClick, children }) => {

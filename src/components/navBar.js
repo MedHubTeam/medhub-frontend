@@ -1,5 +1,8 @@
+// Import react libraries
 import React from 'react'
 import { Link } from 'react-router-dom'
+
+// Import jsx components
 import '../assets/styles/navBar.css'
 
 const NavBar = () => {

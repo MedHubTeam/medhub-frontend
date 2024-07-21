@@ -1,9 +1,11 @@
+// Import react libraries
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
+// Import jsx components
 import LoginPage from './context/loginPage'
 import HomePage from './context/homePage'
 import AboutPage from './context/aboutPage'
-
 
 function App() {
     return (

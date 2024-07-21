@@ -1,6 +1,6 @@
 async function getContent(page){
     if(page === 'about'){
-        const url = 'https://medhub-backend.onrender.com/about'
+        const url = 'https://medhub-backend.onrender.com/content/about'
         const response = await fetch(url, {
             method: 'GET'
         })

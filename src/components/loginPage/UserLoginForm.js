@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 // Import services and helper functions
 import loginService from '../../services/loginService.js'
-// import { loggedInUser } from '../../services/loggedUser.js'
+import { loggedInUser } from '../../services/loggedUser.js'
 
 // Import css and design files
 import '../../assets/styles/LoginForm.css'
@@ -25,15 +25,12 @@ export default function LoginForm() {
 
     useEffect(() => {
         if (loginResponse) {
-            /*
             if (loginResponse.status === 'successful') {
                 loggedInUser.setUserLogin(loginResponse)
                 navigate('/home')
             } else {
                 alert('Wrong login credentials')
-            }*/
-            navigate('/home')
-            console.log(loginResponse)
+            }
         }
     }, [loginResponse, navigate])
 
@@ -59,19 +56,14 @@ export default function LoginForm() {
                         data-testid="passwordLoginInput"
                         placeholder="Enter your password"
                         required
-                        pattern="(?=.*[A-Z])(?=.*[\W_]).{8,}"
-                        title="Password must be at least 8 characters long and include at least one uppercase letter and one symbol."
                     />
                     <button
                         type="submit"
                         data-testid="submitLoginInputButton">
                         Log In
                     </button>
-                    <p>Don’t have an account? <a href="/register">Register here</a></p> {/* Provide a valid href value */}
+                    <p>Don’t have an account? <a href="/register">Register here</a></p>
                 </form>
-            </div>
-            <div className="login-artwork">
-                {/* additional elements */}
             </div>
         </div>
     )

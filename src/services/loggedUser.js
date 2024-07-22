@@ -11,6 +11,14 @@ class LoggedUserClass {
     printUser(){
         console.log(this.#userID)
     }
+
+    logout(){
+        this.#userID = null
+    }
+
+    checkLoggedInForPage() {
+        return this.#userID === null
+    }
 }
 
 export const loggedInUser = new LoggedUserClass()

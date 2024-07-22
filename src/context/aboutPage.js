@@ -1,5 +1,6 @@
 // Import react libraries
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 // Import services and helper functions
 import { getAboutContent } from '../services/contentService'
@@ -10,14 +11,19 @@ import NavBar from '../components/navBar'
 
 const AboutPage = () => {
     const [content, setContent] = useState(null)
-  
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (loggedInUser.checkLoggedInForPage()) {
+            navigate('/')
+        }
+    }, [navigate])
+
     useEffect(() => {
         const fetchContent = async () => {
             const data = await getAboutContent()
             setContent(data)
-            loggedInUser.printUser()
         }
-  
         fetchContent()
     }, [])
   

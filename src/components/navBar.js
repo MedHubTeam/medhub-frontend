@@ -1,11 +1,20 @@
 // Import react libraries
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-// Import jsx components
+// Import services and helper functions
+import { loggedInUser } from '../services/loggedUser'
+
+// Import css and design files
 import '../assets/styles/navBar.css'
 
 const NavBar = () => {
+    const navigate = useNavigate()
+    const handleLogoutClick = () => {
+        loggedInUser.logout()
+        navigate('/')
+    }
+
     return (
         <nav className="nav" data-testid="navBarWrapper">
             <ul>
@@ -14,6 +23,9 @@ const NavBar = () => {
                 </li>
                 <li>
                     <Link to="/about" data-testid="aboutNavButton">About Us</Link>
+                </li>
+                <li>
+                    <button onClick={handleLogoutClick} data-testid="navLogoutButton">Logout</button>
                 </li>
             </ul>
         </nav>

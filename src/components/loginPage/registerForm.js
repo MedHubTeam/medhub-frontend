@@ -50,6 +50,7 @@ export default function RegisterForm() {
             <div className="login-form">
                 <img src={medhub_logo} className="App-logo" alt="MedHub logo" />
                 <h1>Register to MedHub!</h1>
+                <p>Enter to get unlimited access to data & information.</p>
                 <form onSubmit={onRegisterSubmit}>
                     <label htmlFor="identifier">Username</label>
                     <input

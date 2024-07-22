@@ -25,6 +25,9 @@ const NavBar = () => {
                     <Link to="/about" data-testid="aboutNavButton">About Us</Link>
                 </li>
                 <li>
+                    <Link to="/personal area" data-testid="personalAreaNavButton">Home</Link>
+                </li>
+                <li>
                     <button onClick={handleLogoutClick} data-testid="navLogoutButton">Logout</button>
                 </li>
             </ul>

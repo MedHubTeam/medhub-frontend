@@ -7,6 +7,7 @@ import LoginPage from './context/loginPage'
 import RegisterPage from './context/registerPage'
 import HomePage from './context/homePage'
 import AboutPage from './context/aboutPage'
+import PersonalAreaPage from './context/personalAreaPage'
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/register" exact element={<RegisterPage />} />
                 <Route path="/home" exact element={<HomePage />} />
                 <Route path="/about" exact element={<AboutPage />} />
+                <Route path="/personal area" exact element={<PersonalAreaPage />} />
             </Routes>
         </Router>
     )

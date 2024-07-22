@@ -12,7 +12,6 @@ function HomePage(){
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log(loggedInUser.checkLoggedInForPage())
         if (loggedInUser.checkLoggedInForPage()) {
             navigate('/')
         }

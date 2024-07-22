@@ -23,7 +23,6 @@ export default function RegisterForm() {
         const confirmPassword = target[3].value
         const profession = target[4].value
         const response = await preformRegister(identifier, email, password, confirmPassword, profession)
-        console.log(response)
         setRegisterResponse(response)
     }, [])
 

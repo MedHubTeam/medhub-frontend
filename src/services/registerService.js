@@ -1,5 +1,4 @@
 async function preformRegister(username, email, password, confirmPassword, profession) {
-    console.log(await checkUsernameExists(username))
     if (await checkUsernameExists(username)) { return { 'status': 'failed verification', 'reason': 'username' } }
     if (await checkEmailExists(email)) { return { 'status': 'failed verification', 'reason': 'email' } }
     if (password !== confirmPassword) { return { 'status': 'failed verification', 'reason': 'password' } }

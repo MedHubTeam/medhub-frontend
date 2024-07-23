@@ -8,6 +8,10 @@ class LoggedUserClass {
         this.#userID = data['data']['userID']
     }
 
+    getUserId(){
+        return this.#userID
+    }
+    
     printUser(){
         console.log(this.#userID)
     }
@@ -22,10 +26,10 @@ class LoggedUserClass {
     getUserDetails()  {
         // This should return the user details
         return {
-            username: 'john_doe',
-            password: 'password123',
-            email: 'john@example.com',
-            profession: 'Developer'
+            username: '',
+            password: '',
+            email: '',
+            profession: ''
         }
     }
     updateUserDetails(userDetails)  {

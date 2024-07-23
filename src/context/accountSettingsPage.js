@@ -1,131 +1,140 @@
-// Import react libraries
-import React, { useState, useEffect } from 'react'
-import NavBar from '../components/navBar'
+// pages/AccountSettingsPage.js
 
-// Import services and helper functions
-import { loggedInUser } from '../services/loggedUser'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getToken } from '../services/authService'; // Import token service
+import NavBar from '../components/navBar';
 
-function AccountSettingsPage() {
+const AccountSettingsPage = () => {
     const [userDetails, setUserDetails] = useState({
         username: '',
-        password: '',
         email: '',
-        profession: ''
-    })
-    const [oldPassword, setOldPassword] = useState('')
-    const [showPassword, setShowPassword] = useState(false)
-    const [showOldPassword, setShowOldPassword] = useState(false)
-
+        profession: '',
+        oldPassword: '',
+        newPassword: ''
+    });
+    const [showPassword, setShowPassword] = useState(false);
+    const [showOldPassword, setShowOldPassword] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch current user details and set the state
-        const currentUserDetails = loggedInUser.getUserDetails()
-        setUserDetails(currentUserDetails)
-    }, [])
+        const fetchUserDetails = async () => {
+            const token = getToken();
+            try {
+                const response = await fetch('/api/user-details', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, // Include token in header
+                    },
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setUserDetails({
+                        ...userDetails,
+                        username: data.username,
+                        email: data.email,
+                        profession: data.profession
+                    });
+                } else {
+                    console.error('Failed to fetch user details');
+                    navigate('/login'); // Redirect if token is invalid or expired
+                }
+            } catch (error) {
+                console.error('Failed to fetch user details', error);
+            }
+        };
 
-    const handleOldPasswordChange = (event) => {
-        setOldPassword(event.target.value)
-    }
+        fetchUserDetails();
+    }, [navigate]);
 
-
-    const handleChange = (event) => {
-        const { name, value } = event.target
-        setUserDetails({
-            ...userDetails,
-            [name]: value
-        })
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        // Perform old password verification and update user details
-        if (loggedInUser.verifyOldPassword(oldPassword)) {
-            loggedInUser.updateUserDetails(userDetails)
-            alert('Account details updated successfully!')
-        } else {
-            alert('Old password is incorrect!')
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        const token = getToken();
+        try {
+            const response = await fetch('/api/update-user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Include token in header
+                },
+                body: JSON.stringify({
+                    oldPassword: userDetails.oldPassword,
+                    newPassword: userDetails.newPassword,
+                    username: userDetails.username,
+                    email: userDetails.email,
+                    profession: userDetails.profession
+                }),
+            });
+            const result = await response.json();
+            if (response.ok) {
+                // Handle success, e.g., show a success message
+            } else {
+                console.error('Failed to update user details', result.message);
+            }
+        } catch (error) {
+            console.error('Failed to update user details', error);
         }
-    }
+    };
 
-    const toggleShowPassword = () => {
-        setShowPassword(!showPassword)
-    }
-
-    const toggleShowOldPassword = () => {
-        setShowOldPassword(!showOldPassword)
-    }
+    const toggleShowPassword = () => setShowPassword(!showPassword);
+    const toggleShowOldPassword = () => setShowOldPassword(!showOldPassword);
 
     return (
         <div>
-            <NavBar/>
-            <h1 data-testid='accountSettingsNavButton'>Account Settings</h1>
-            <form onSubmit={handleSubmit}>
+            <NavBar />
+            <h1>Account Settings</h1>
+            <form onSubmit={handleUpdate}>
                 <label>
                     Username:
                     <input
-                        type='text'
-                        name='username'
+                        type="text"
                         value={userDetails.username}
-                        onChange={handleChange}
-                        data-testid='username-input'
+                        onChange={(e) => setUserDetails({ ...userDetails, username: e.target.value })}
                     />
                 </label>
-                <br />
+                <label>
+                    Email:
+                    <input
+                        type="email"
+                        value={userDetails.email}
+                        onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+                    />
+                </label>
+                <label>
+                    Profession:
+                    <input
+                        type="text"
+                        value={userDetails.profession}
+                        onChange={(e) => setUserDetails({ ...userDetails, profession: e.target.value })}
+                    />
+                </label>
                 <label>
                     Old Password:
                     <input
                         type={showOldPassword ? 'text' : 'password'}
-                        name='oldPassword'
-                        value={oldPassword}
-                        onChange={handleOldPasswordChange}
-                        data-testid='old-password-input'
+                        value={userDetails.oldPassword}
+                        onChange={(e) => setUserDetails({ ...userDetails, oldPassword: e.target.value })}
                     />
-                    <button type='button' onClick={toggleShowOldPassword} data-testid='show-old-password-button'>
-                        {showOldPassword ? 'Hide Password' : 'Show Password'}
+                    <button type="button" onClick={toggleShowOldPassword}>
+                        {showOldPassword ? 'Hide' : 'Show'} Old Password
                     </button>
                 </label>
-                <br />
-                <br />
                 <label>
                     New Password:
                     <input
                         type={showPassword ? 'text' : 'password'}
-                        name='password'
-                        value={userDetails.password}
-                        onChange={handleChange}
-                        data-testid='password-input'
+                        value={userDetails.newPassword}
+                        onChange={(e) => setUserDetails({ ...userDetails, newPassword: e.target.value })}
                     />
-                    <button type='button' onClick={toggleShowPassword} data-testid='show-password-button'>
-                        {showPassword ? 'Hide Password' : 'Show Password'}
+                    <button type="button" onClick={toggleShowPassword}>
+                        {showPassword ? 'Hide' : 'Show'} New Password
                     </button>
                 </label>
-                <br />
-                <label>
-                    Email:
-                    <input
-                        type='email'
-                        name='email'
-                        value={userDetails.email}
-                        onChange={handleChange}
-                        data-testid='email-input'
-                    />
-                </label>
-                <br />
-                <label>
-                    Profession:
-                    <input
-                        type='text'
-                        name='profession'
-                        value={userDetails.profession}
-                        onChange={handleChange}
-                        data-testid='profession-input'
-                    />
-                </label>
-                <br />
-                <button type='submit' data-testid='submit-button'>Update</button>
+                <button type="submit">Update</button>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default AccountSettingsPage
+export default AccountSettingsPage;

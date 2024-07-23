@@ -25,7 +25,7 @@ const NavBar = () => {
                     <Link to="/about" data-testid="aboutNavButton">About Us</Link>
                 </li>
                 <li>
-                    <Link to="/personal area" data-testid="personalAreaNavButton">Personal Area</Link>
+                    <Link to="/account" data-testid="accountSettingsNavButton">Account settings</Link>
                 </li>
                 <li>
                     <button onClick={handleLogoutClick} data-testid="navLogoutButton">Logout</button>

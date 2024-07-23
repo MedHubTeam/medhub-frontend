@@ -1,23 +1,32 @@
 // Import react libraries
 import React, { useState, useEffect } from 'react'
+import NavBar from '../components/navBar'
 
 // Import services and helper functions
 import { loggedInUser } from '../services/loggedUser'
 
-function PersonalAreaPage() {
+function AccountSettingsPage() {
     const [userDetails, setUserDetails] = useState({
         username: '',
         password: '',
         email: '',
         profession: ''
     })
+    const [oldPassword, setOldPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
+    const [showOldPassword, setShowOldPassword] = useState(false)
+
 
     useEffect(() => {
         // Fetch current user details and set the state
         const currentUserDetails = loggedInUser.getUserDetails()
         setUserDetails(currentUserDetails)
     }, [])
+
+    const handleOldPasswordChange = (event) => {
+        setOldPassword(event.target.value)
+    }
+
 
     const handleChange = (event) => {
         const { name, value } = event.target
@@ -29,18 +38,27 @@ function PersonalAreaPage() {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        // Update user details
-        loggedInUser.updateUserDetails(userDetails)
-        alert('Account details updated successfully!')
+        // Perform old password verification and update user details
+        if (loggedInUser.verifyOldPassword(oldPassword)) {
+            loggedInUser.updateUserDetails(userDetails)
+            alert('Account details updated successfully!')
+        } else {
+            alert('Old password is incorrect!')
+        }
     }
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword)
     }
 
+    const toggleShowOldPassword = () => {
+        setShowOldPassword(!showOldPassword)
+    }
+
     return (
         <div>
-            <h1 data-testid='personal-area-title'>Personal Area</h1>
+            <NavBar/>
+            <h1 data-testid='accountSettingsNavButton'>Account Settings</h1>
             <form onSubmit={handleSubmit}>
                 <label>
                     Username:
@@ -54,7 +72,22 @@ function PersonalAreaPage() {
                 </label>
                 <br />
                 <label>
-                    Password:
+                    Old Password:
+                    <input
+                        type={showOldPassword ? 'text' : 'password'}
+                        name='oldPassword'
+                        value={oldPassword}
+                        onChange={handleOldPasswordChange}
+                        data-testid='old-password-input'
+                    />
+                    <button type='button' onClick={toggleShowOldPassword} data-testid='show-old-password-button'>
+                        {showOldPassword ? 'Hide Password' : 'Show Password'}
+                    </button>
+                </label>
+                <br />
+                <br />
+                <label>
+                    New Password:
                     <input
                         type={showPassword ? 'text' : 'password'}
                         name='password'
@@ -95,4 +128,4 @@ function PersonalAreaPage() {
     )
 }
 
-export default PersonalAreaPage
+export default AccountSettingsPage

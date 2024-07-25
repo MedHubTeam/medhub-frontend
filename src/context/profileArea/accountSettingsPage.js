@@ -2,21 +2,51 @@ import React, { useEffect, useState } from 'react'
 import '../../assets/styles/AccountSettings.css'
 import NavBar from '../../components/navBar' 
 import { confirmAlert } from 'react-confirm-alert'
-import { deleteUser, getUsername, getEmail, getProfession } from '../../services/userEditService'
+import { deleteUser } from '../../services/userEditService'
+import { getUsername, getEmail, getProfession } from '../../services/userInfoService'
 import { loggedInUser } from '../../services/loggedUser'
 import { useNavigate } from 'react-router-dom'
 
 function AccountSettingsPage() {
+    const [username, setUsername] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [profession, setProfession] = useState(null)
+
     const navigate = useNavigate()
- //   const [setUserDetails] = useState({})
+    //const [setUserDetails] = useState({})
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setNewPassword] = useState('')
 
     useEffect(() => {
+        if (loggedInUser.checkLoggedInForPage()) {
+            navigate('/')
+        }
+
+        const fetchUsername = async () => {
+            const response = await getUsername(loggedInUser.getUserId())
+            if (response.status === 'successful') {
+                setUsername(response.data.username)
+            }
+        }
+
+        const fetchEmail = async () => {
+            const response = await getEmail(loggedInUser.getUserId())
+            if (response.status === 'successful') {
+                setEmail(response.data.email)
+            }
+        }
+
+        const fetchProfession = async () => {
+            const response = await getProfession(loggedInUser.getUserId())
+            if (response.status === 'successful') {
+                setProfession(response.data.proStatus)
+            }
+        }
+
         const fetchUserDetails = async () => {
-            await loggedInUser.fetchUserDetails()
-            const details = loggedInUser.getUserDetails()
-            setUserDetails(details)
+            await fetchUsername()
+            await fetchEmail()
+            await fetchProfession()
         }
 
         fetchUserDetails()
@@ -80,22 +110,25 @@ function AccountSettingsPage() {
             ]
         })
     }
+
+    if (!profession) return <div><NavBar/><h1>Loading...</h1></div>
+
     return (
         <div className="AccountSettingsPage">
             <header className="AccountSettingsPage-header">
-                <NavBar /> {/* Include the NavBar component */}
+                <NavBar />
                 <div className="user-details">
                     <label>
                         Username:
-                        <input type="text" value={getUsername(loggedInUser)} readOnly />
+                        <input type="text" value={username} />
                     </label>
                     <label>
                         Email:
-                        <input type="text" value={getEmail(loggedInUser)} readOnly />
+                        <input type="text" value={email} />
                     </label>
                     <label>
                         profession:
-                        <input type="text" value={getProfession(loggedInUser)} readOnly />
+                        <input type="text" value={profession} />
                     </label>    
                 </div>
                 <div className="password-change">

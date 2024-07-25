@@ -7,19 +7,21 @@ import LoginPage from './context/loginPage'
 import RegisterPage from './context/registerPage'
 import HomePage from './context/homePage'
 import AboutPage from './context/aboutPage'
-import ProfilePage from './context/profilePage'
-import AccountSettingsPage from './context/accountSettingsPage'
+import ProfilePage from './context/profileArea/profilePage'
+import AccountSettingsPage from './context/profileArea/accountSettingsPage'
+import FollowingPage from './context/profileArea/followingPage'
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" exact element={<LoginPage />} />
-                <Route path="/profile" exact element={<ProfilePage />} />
-                <Route path="/register" exact element={<RegisterPage />} />
-                <Route path="/home" exact element={<HomePage />} />
-                <Route path="/about" exact element={<AboutPage />} />
-                <Route path="/account" exact element={<AccountSettingsPage />} />
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile/following" element={<FollowingPage />} />
+                <Route path="/profile/edit" element={<AccountSettingsPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/about" element={<AboutPage />} />
             </Routes>
         </Router>
     )

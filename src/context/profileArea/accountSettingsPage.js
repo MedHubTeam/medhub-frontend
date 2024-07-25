@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import '../assets/styles/AccountSettings.css'// Ensure the CSS file exists
-import NavBar from '../components/navBar' 
+import '../../assets/styles/AccountSettings.css'
+import NavBar from '../../components/navBar' 
 import { confirmAlert } from 'react-confirm-alert'
-import { deleteUser } from '../services/userEditService'
-import { loggedInUser } from '../services/loggedUser'
+import { deleteUser } from '../../services/userEditService'
+import { loggedInUser } from '../../services/loggedUser'
 import { useNavigate } from 'react-router-dom'
 
 function AccountSettingsPage() {
@@ -14,7 +14,7 @@ function AccountSettingsPage() {
 
     useEffect(() => {
         const fetchUserDetails = async () => {
-            await loggedInUser.fetchUserDetails() // Ensure fetchUserDetails is called correctly
+            await loggedInUser.fetchUserDetails()
             const details = loggedInUser.getUserDetails()
             setUserDetails(details)
         }

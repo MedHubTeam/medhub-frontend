@@ -10,8 +10,8 @@ import NavBar from '../components/navBar'
 import HomePage from '../context/homePage'
 import AboutPage from '../context/aboutPage'
 import LoginPage from '../context/loginPage'
-import ProfilePage from '../context/profilePage'
-import AccountSettingsPage from '../context/accountSettingsPage'
+import ProfilePage from '../context/profileArea/profilePage'
+import AccountSettingsPage from '../context/profileArea/accountSettingsPage'
 
 
 describe('Checks Nav Bar Buttons', () => {

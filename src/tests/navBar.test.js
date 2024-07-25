@@ -10,6 +10,7 @@ import NavBar from '../components/navBar'
 import HomePage from '../context/homePage'
 import AboutPage from '../context/aboutPage'
 import LoginPage from '../context/loginPage'
+import ProfilePage from '../context/profilePage'
 import AccountSettingsPage from '../context/accountSettingsPage'
 
 
@@ -40,5 +41,9 @@ describe('Checks Nav Bar Exists in Pages', () => {
     test('Checks NavBar exists in "AccountSettingPage"', () => {
         RouterRender(<AccountSettingsPage />)
         expect(elementExists('homeNavButton')).toBe(true)
+    })
+    test('Checks NavBar exists in "profilePage"', () => {
+        RouterRender(<ProfilePage />)
+        expect(elementExists('profileNavButton')).toBe(true)
     })
 })

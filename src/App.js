@@ -7,6 +7,7 @@ import LoginPage from './context/loginPage'
 import RegisterPage from './context/registerPage'
 import HomePage from './context/homePage'
 import AboutPage from './context/aboutPage'
+import ProfilePage from './context/profilePage'
 import AccountSettingsPage from './context/accountSettingsPage'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" exact element={<LoginPage />} />
+                <Route path="/profile" exact element={<ProfilePage />} />
                 <Route path="/register" exact element={<RegisterPage />} />
                 <Route path="/home" exact element={<HomePage />} />
                 <Route path="/about" exact element={<AboutPage />} />

@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import '../../assets/styles/AccountSettings.css'
 import NavBar from '../../components/navBar' 
 import { confirmAlert } from 'react-confirm-alert'
-import { deleteUser } from '../../services/userEditService'
+import { deleteUser, getUsername, getEmail, getProfession } from '../../services/userEditService'
 import { loggedInUser } from '../../services/loggedUser'
 import { useNavigate } from 'react-router-dom'
 
 function AccountSettingsPage() {
     const navigate = useNavigate()
-    const [userDetails, setUserDetails] = useState({})
+ //   const [setUserDetails] = useState({})
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setNewPassword] = useState('')
 
@@ -87,15 +87,15 @@ function AccountSettingsPage() {
                 <div className="user-details">
                     <label>
                         Username:
-                        <input type="text" value={userDetails.username} readOnly />
+                        <input type="text" value={getUsername(loggedInUser)} readOnly />
                     </label>
                     <label>
                         Email:
-                        <input type="text" value={userDetails.email} readOnly />
+                        <input type="text" value={getEmail(loggedInUser)} readOnly />
                     </label>
                     <label>
                         profession:
-                        <input type="text" value={userDetails.profession} readOnly />
+                        <input type="text" value={getProfession(loggedInUser)} readOnly />
                     </label>    
                 </div>
                 <div className="password-change">

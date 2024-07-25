@@ -6,12 +6,29 @@ async function deleteUser(id) {
     return await response.json()
 }
 
-module.exports = { deleteUser }
-
-module.exports = async (username, password, email, profession) => {
-    const url = `https://medhub-backend.onrender.com/account?username=${username}&password=${password}&profession=${profession}&email=${email}`
+async function getUsername (username) {
+    const url = `https://medhub-backend.onrender.com/account?username=${username}`
     const response = await fetch(url, {
         method: 'GET'
     })
     return await response.json()
 }
+
+async function getEmail (email) {
+    const url = `https://medhub-backend.onrender.com/account?email=${email}`
+    const response = await fetch(url, {
+        method: 'GET'
+    })
+    return await response.json()
+}
+
+async function getProfession (profession) {
+    const url = `https://medhub-backend.onrender.com/account?profession=${profession}`
+    const response = await fetch(url, {
+        method: 'GET'
+    })
+    return await response.json()
+}
+
+
+module.exports = { deleteUser, getUsername, getEmail, getProfession }

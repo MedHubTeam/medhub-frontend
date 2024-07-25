@@ -1,4 +1,4 @@
-
+import React, { useEffect, useState } from 'react'
 import '../assets/styles/AccountSettings.css'// Ensure the CSS file exists
 import NavBar from '../components/navBar' 
 import { confirmAlert } from 'react-confirm-alert'
@@ -8,6 +8,53 @@ import { useNavigate } from 'react-router-dom'
 
 function AccountSettingsPage() {
     const navigate = useNavigate()
+    const [userDetails, setUserDetails] = useState({})
+    const [oldPassword, setOldPassword] = useState('')
+    const [newPassword, setNewPassword] = useState('')
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            await loggedInUser.fetchUserDetails() // Ensure fetchUserDetails is called correctly
+            const details = loggedInUser.getUserDetails()
+            setUserDetails(details)
+        }
+
+        fetchUserDetails()
+    }, [])
+
+    const handleChangePassword = async () => {
+        if (!oldPassword || !newPassword) {
+            alert('Please enter both old and new passwords.')
+            return
+        }
+
+        try {
+            const response = await fetch('/api/user/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: loggedInUser.getUserId(),
+                    oldPassword,
+                    newPassword,
+                }),
+            })
+
+            const result = await response.json()
+            if (response.ok) {
+                alert('Password changed successfully.')
+                setOldPassword('')
+                setNewPassword('')
+            } else {
+                alert('Failed to change password: ' + result.error)
+            }
+        } catch (error) {
+            console.error('Error changing password:', error)
+            alert('Error changing password.')
+        }
+    }
+
     const deleteOnClick = async () => {
         confirmAlert({
             title: 'Confirm to delete your user?',
@@ -40,17 +87,35 @@ function AccountSettingsPage() {
                 <div className="user-details">
                     <label>
                         Username:
-                        <input type="text" value={loggedInUser.getUserDetails.username} readOnly />
+                        <input type="text" value={userDetails.username} readOnly />
                     </label>
                     <label>
                         Email:
-                        <input type="text" value={loggedInUser.getUserDetails.email} readOnly />
+                        <input type="text" value={userDetails.email} readOnly />
                     </label>
                     <label>
-                        Password:
-                        <input type="password" value="******" readOnly />
+                        profession:
+                        <input type="text" value={userDetails.profession} readOnly />
+                    </label>    
+                </div>
+                <div className="password-change">
+                    <label>
+                        Old Password:
+                        <input
+                            type="password"
+                            value={oldPassword}
+                            onChange={(e) => setOldPassword(e.target.value)}
+                        />
                     </label>
-                    {/* Add more fields as needed */}
+                    <label>
+                        New Password:
+                        <input
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                    </label>
+                    <button onClick={handleChangePassword}>Change Password</button>
                 </div>
                 <button onClick={deleteOnClick}>Delete User</button>
             </header>

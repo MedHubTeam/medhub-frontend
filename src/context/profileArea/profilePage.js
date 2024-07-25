@@ -22,6 +22,7 @@ function ProfilePage(){
             <NavBar />
             <h1>Profile Page</h1>
             <button onClick={() => {navigate('/profile/following')}} data-testid="profileFollowingButton"> Following List </button>
+            <button onClick={() => {navigate('/profile/edit')}} data-testid="profileSettingsButton"> Following List </button>
         </div>
     )
 }

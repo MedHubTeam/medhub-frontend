@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 // Import services and helper functions
 import { loggedInUser } from '../../services/loggedUser'
-import { getFollowingList } from '../../services/userInfoService'
+import { getFollowingList, getUsername } from '../../services/userInfoService'
 
 
 function FollowingPage(){
@@ -19,9 +19,20 @@ function FollowingPage(){
 
     useEffect(() => {
         const fetchContent = async () => {
+            let result = ''
             const data = await getFollowingList(loggedInUser.getUserId())
             if (data.status === 'successful') {
-                setContent(data)
+                const promises = data.data.map(async (id) => {
+                    const response = await getUsername(id)
+                    if (response.status === 'successful') {
+                        return response.data.username
+                    }
+                    return null
+                })
+                
+                const usernames = await Promise.all(promises)
+                result = usernames.filter(username => username !== null).join(' | ')
+                setContent(result)
             }
         }
         fetchContent()
@@ -32,7 +43,7 @@ function FollowingPage(){
     return (
         <div>
             <h1>Following</h1>
-            <p>{content.data}</p>
+            <p>{content}</p>
             <button onClick={() => {navigate('/profile')}} data-testid="followingGoBackButton"> Go Back to Profile </button>
         </div>
     )

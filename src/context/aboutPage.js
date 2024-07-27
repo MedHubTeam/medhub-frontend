@@ -27,7 +27,7 @@ const AboutPage = () => {
         fetchContent()
     }, [])
   
-    if (!content) return <div><NavBar/></div>
+    if (!content) return <div><NavBar/><h1>Loading...</h1></div>
   
     return (
         <div>

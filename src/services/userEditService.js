@@ -6,29 +6,41 @@ async function deleteUser(id) {
     return await response.json()
 }
 
-async function getUsername (username) {
-    const url = `https://medhub-backend.onrender.com/account?username=${username}`
+async function updateUsername(id, newUsername) {
+    const url = 'https://medhub-backend.onrender.com/setUser/username?id=${id}'
     const response = await fetch(url, {
-        method: 'GET'
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, newUsername }),
     })
     return await response.json()
 }
 
-async function getEmail (email) {
-    const url = `https://medhub-backend.onrender.com/account?email=${email}`
+async function updateEmail(id, newEmail) {
+    const url = 'https://medhub-backend.onrender.com/setUser/email?id=${id}'
     const response = await fetch(url, {
-        method: 'GET'
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, newEmail }),
     })
     return await response.json()
 }
 
-async function getProfession (profession) {
-    const url = `https://medhub-backend.onrender.com/account?profession=${profession}`
+async function updateProfession(id, newProfession) {
+    const url = 'https://medhub-backend.onrender.com/setUser/profession?id=${id}'
     const response = await fetch(url, {
-        method: 'GET'
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, newProfession }),
     })
     return await response.json()
 }
 
+module.exports = { deleteUser, updateUsername, updateEmail, updateProfession }
 
-module.exports = { deleteUser, getUsername, getEmail, getProfession }

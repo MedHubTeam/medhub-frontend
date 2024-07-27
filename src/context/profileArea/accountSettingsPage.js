@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../../assets/styles/AccountSettings.css'
 import NavBar from '../../components/navBar' 
 import { confirmAlert } from 'react-confirm-alert'
-import { deleteUser } from '../../services/userEditService'
+import { deleteUser, updateUsername, updateEmail, updateProfession } from '../../services/userEditService'
 import { getUsername, getEmail, getProfession } from '../../services/userInfoService'
 import { loggedInUser } from '../../services/loggedUser'
 import { useNavigate } from 'react-router-dom'
@@ -11,9 +11,8 @@ function AccountSettingsPage() {
     const [username, setUsername] = useState(null)
     const [email, setEmail] = useState(null)
     const [profession, setProfession] = useState(null)
-
+    const [isEditing, setIsEditing] = useState(false)
     const navigate = useNavigate()
-    //const [setUserDetails] = useState({})
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setNewPassword] = useState('')
 
@@ -50,8 +49,44 @@ function AccountSettingsPage() {
         }
 
         fetchUserDetails()
-    }, [])
+    }, [navigate])
 
+    const handleSave = async () => {
+        const userId = loggedInUser.getUserId()
+        const updatePromises = []
+
+        if (username) {
+            updatePromises.push(updateUsername(userId, username))
+        }
+
+        if (email) {
+            updatePromises.push(updateEmail(userId, email))
+        }
+
+        if (profession) {
+            updatePromises.push(updateProfession(userId, profession))
+        }
+
+        try {
+            const responses = await Promise.all(updatePromises)
+
+            const allSuccessful = responses.every(response => response.status === 'successful')
+
+            if (allSuccessful) {
+                alert('Details updated successfully.')
+                setIsEditing(false)
+            } else {
+                alert('Failed to update details.')
+            }
+        } catch (error) {
+            console.error('Error updating details:', error)
+            alert('Error updating details.')
+        }
+    }
+
+    const handleEdit = () => {
+        setIsEditing(true)
+    }
     const handleChangePassword = async () => {
         if (!oldPassword || !newPassword) {
             alert('Please enter both old and new passwords.')
@@ -120,16 +155,31 @@ function AccountSettingsPage() {
                 <div className="user-details">
                     <label>
                         Username:
-                        <input type="text" value={username} />
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            disabled={!isEditing}
+                        />
                     </label>
                     <label>
                         Email:
-                        <input type="text" value={email} />
+                        <input
+                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            disabled={!isEditing}
+                        />
                     </label>
                     <label>
-                        profession:
-                        <input type="text" value={profession} />
-                    </label>    
+                        Profession:
+                        <input
+                            type="text"
+                            value={profession}
+                            onChange={(e) => setProfession(e.target.value)}
+                            disabled={!isEditing}
+                        />
+                    </label>
                 </div>
                 <div className="password-change">
                     <label>
@@ -150,6 +200,11 @@ function AccountSettingsPage() {
                     </label>
                     <button onClick={handleChangePassword}>Change Password</button>
                 </div>
+                {isEditing ? (
+                    <button onClick={handleSave}>Save</button>
+                ) : (
+                    <button onClick={handleEdit}>Edit</button>
+                )}
                 <button onClick={deleteOnClick}>Delete User</button>
             </header>
         </div>

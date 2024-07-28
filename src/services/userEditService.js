@@ -7,7 +7,7 @@ async function deleteUser(id) {
 }
 
 async function updateUsername(id, newUsername) {
-    const url = 'https://medhub-backend.onrender.com/setUser/username?id=${id}'
+    const url = `https://medhub-backend.onrender.com/setUser/username?id=${id}`
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -19,7 +19,7 @@ async function updateUsername(id, newUsername) {
 }
 
 async function updateEmail(id, newEmail) {
-    const url = 'https://medhub-backend.onrender.com/setUser/email?id=${id}'
+    const url = `https://medhub-backend.onrender.com/setUser/email?id=${id}`
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -31,7 +31,7 @@ async function updateEmail(id, newEmail) {
 }
 
 async function updateProfession(id, newProfession) {
-    const url = 'https://medhub-backend.onrender.com/setUser/profession?id=${id}'
+    const url = `https://medhub-backend.onrender.com/setUser/profession?id=${id}`
     const response = await fetch(url, {
         method: 'POST',
         headers: {

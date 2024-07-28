@@ -10,6 +10,7 @@ import AboutPage from './context/aboutPage'
 import ProfilePage from './context/profileArea/profilePage'
 import AccountSettingsPage from './context/profileArea/accountSettingsPage'
 import FollowingPage from './context/profileArea/followingPage'
+import UserPage from './context/userPage'
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
+                <Route path="/user/:userId" element={<UserPage />} />
             </Routes>
         </Router>
     )

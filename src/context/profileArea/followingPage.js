@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 // Import services and helper functions
 import { loggedInUser } from '../../services/loggedUser'
 import { getFollowingList, getUsername } from '../../services/userInfoService'
-
+import { unfollowUser } from '../../services/followService'
 
 function FollowingPage(){
     const [users, setUsers] = useState([])
@@ -16,23 +16,24 @@ function FollowingPage(){
             navigate('/')
         }
     }, [navigate])
+    
+    const fetchContent = async () => {
+        const data = await getFollowingList(loggedInUser.getUserId())
+        if (data.status === 'successful') {
+            const promises = data.data.map(async (id) => {
+                const response = await getUsername(id)
+                if (response.status === 'successful') {
+                    return { id, username: response.data.username }
+                }
+                return null
+            })
+
+            const userObjects = await Promise.all(promises)
+            setUsers(userObjects.filter(user => user !== null))
+        }
+    }
 
     useEffect(() => {
-        const fetchContent = async () => {
-            const data = await getFollowingList(loggedInUser.getUserId())
-            if (data.status === 'successful') {
-                const promises = data.data.map(async (id) => {
-                    const response = await getUsername(id)
-                    if (response.status === 'successful') {
-                        return { id, username: response.data.username }
-                    }
-                    return null
-                })
-
-                const userObjects = await Promise.all(promises)
-                setUsers(userObjects.filter(user => user !== null))
-            }
-        }
         fetchContent()
     }, [])
     
@@ -51,6 +52,10 @@ function FollowingPage(){
                     <li key={user.id}>
                         {user.username}
                         <button onClick={() => navigate(`/user/${user.id}`)}>Go to Profile</button>
+                        <button onClick={async () => {
+                            await unfollowUser(loggedInUser.getUserId(), user.id)
+                            fetchContent()
+                        }}>Remove Follow</button>
                     </li>
                 ))}
             </ul>

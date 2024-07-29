@@ -22,7 +22,7 @@ function HomePage() {
 
     const loadPosts = async () => {
         const postsData = await fetchPosts()
-        setPosts(postsData.reverse()) // Ensure newest posts are on top
+        setPosts(postsData.reverse())
     }
 
     const handlePostMessage = async () => {

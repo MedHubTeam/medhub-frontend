@@ -46,7 +46,7 @@ function HomePage() {
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch('http://localhost:5555/api/posts')
+            const response = await fetch('http://medhub-backend.onrender.com/api/posts')
             const data = await response.json()
             console.log('Fetched posts:', data)
             const sortedPosts = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
@@ -59,7 +59,7 @@ function HomePage() {
     const handlePostMessage = async () => {
         if (message.trim()) {
             try {
-                const response = await fetch('http://localhost:5555/api/posts', {
+                const response = await fetch('http://medhub-backend.onrender.com/api/posts', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

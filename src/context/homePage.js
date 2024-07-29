@@ -13,10 +13,10 @@ function HomePage() {
     const [editPostId, setEditPostId] = useState(null)
 
     useEffect(() => {
-        if (!loggedInUser.checkLoggedInForPage()) {
-            loadPosts()
+        if (loggedInUser.checkLoggedInForPage()) {
+            navigate('/')
         } else {
-            navigate('/home')
+            loadPosts()
         }
     }, [navigate])
 
@@ -27,9 +27,9 @@ function HomePage() {
 
     const handlePostMessage = async () => {
         if (message.trim()) {
-            const newPost = await createPost(loggedInUser.getUserId(), message)
-            setPosts(prevPosts => [newPost, ...prevPosts])
+            await createPost(loggedInUser.getUserId(), message)
             setMessage('')
+            loadPosts()
         }
     }
 

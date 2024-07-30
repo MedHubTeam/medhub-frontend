@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import '../../assets/styles/AccountSettings.css'
 import NavBar from '../../components/navBar' 
 import { confirmAlert } from 'react-confirm-alert'
-import { deleteUser, updateUserDetails } from '../../services/userEditService'
+import { deleteUser, updateUserDetails, updatePassword } from '../../services/userEditService'
 import { getUsername, getEmail, getProfession } from '../../services/userInfoService'
 import { loggedInUser } from '../../services/loggedUser'
 import { useNavigate } from 'react-router-dom'
+
 
 function AccountSettingsPage() {
     const [username, setUsername] = useState(null)
@@ -94,25 +95,13 @@ function AccountSettingsPage() {
         }
 
         try {
-            const response = await fetch('/api/user/change-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userId: loggedInUser.getUserId(),
-                    oldPassword,
-                    newPassword,
-                }),
-            })
-
-            const result = await response.json()
-            if (response.ok) {
+            const response = await updatePassword(loggedInUser.getUserId(), oldPassword, newPassword)
+            if (response.status==='successful') {
                 alert('Password changed successfully.')
                 setOldPassword('')
                 setNewPassword('')
             } else {
-                alert('Failed to change password: ' + result.error)
+                alert('Failed to change password')
             }
         } catch (error) {
             console.error('Error changing password:', error)

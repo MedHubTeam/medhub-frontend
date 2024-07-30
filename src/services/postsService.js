@@ -7,6 +7,13 @@ async function fetchPosts() {
     return Array.isArray(posts) ? posts : []
 }
 
+async function fetchUserPosts(id) {
+    const url = `${BASE_URL}?user_id=${id}`
+    const response = await fetch(url, { method: 'GET' })
+    const posts = await response.json()
+    return Array.isArray(posts) ? posts : []
+}
+
 async function createPost(userId, content) {
     const url = `${BASE_URL}/create?user_id=${userId}&content=${encodeURIComponent(content)}`
     const response = await fetch(url, { method: 'GET' })
@@ -25,4 +32,4 @@ async function editPost(postId, content) {
     return response.text()
 }
 
-export { fetchPosts, createPost, deletePost, editPost }
+export { fetchPosts, createPost, deletePost, editPost, fetchUserPosts }

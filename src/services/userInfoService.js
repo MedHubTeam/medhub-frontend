@@ -30,4 +30,12 @@ async function getProfession (id) {
     return await response.json()
 }
 
-module.exports = { getFollowingList, getUsername, getEmail, getProfession }
+async function getStats (id) {
+    const url = `https://medhub-backend.onrender.com/user/get/stats?id=${id}`
+    const response = await fetch(url, {
+        method: 'GET'
+    })
+    return await response.json()
+}
+
+module.exports = { getFollowingList, getUsername, getEmail, getProfession, getStats }

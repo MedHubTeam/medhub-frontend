@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 // Import services and helper functions
 import { loggedInUser } from '../../services/loggedUser'
-import { getUsername } from '../../services/userInfoService'
+import { getUsername, getStats } from '../../services/userInfoService'
 import { fetchUserPosts, deletePost, editPost } from '../../services/postsService'
 
 // Import jsx components
@@ -16,6 +16,15 @@ function ProfilePage(){
     const [isEditing, setIsEditing] = useState(false)
     const [editContent, setEditContent] = useState('')
     const [editPostId, setEditPostId] = useState(null)
+
+    const [followersAmount, setFollowersAmount] = useState(null)
+    const [followingAmount, setFollowingAmount] = useState(null)
+    const [likesRecivedAmount, setLikesRecivedAmount] = useState(null)
+    const [likesSentAmount, setLikesSentAmount] = useState(null)
+    const [postsCreatedAmount, setPostsCreatedAmount] = useState(null)
+    const [savesAmount, setSavesAmount] = useState(null)
+
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -37,8 +46,19 @@ function ProfilePage(){
             setPosts(postsData.reverse())
         }
 
+        const loadStats = async () => {
+            const statsData = await getStats(loggedInUser.getUserId())
+            setFollowersAmount(statsData['data']['followers'])
+            setFollowingAmount(statsData['data']['following'])
+            setLikesRecivedAmount(statsData['data']['likesRecived'])
+            setLikesSentAmount(statsData['data']['likesSent'])
+            setPostsCreatedAmount(statsData['data']['postsCreated'])
+            setSavesAmount(statsData['data']['saves'])
+        }
+
         fetchUsername()
         loadPosts()
+        loadStats()
     }, [])
 
     const handleDeletePost = async (postId) => {
@@ -59,9 +79,31 @@ function ProfilePage(){
     return (
         <div>
             <NavBar />
-            <h1>{username}</h1>
-            <button onClick={() => {navigate('/profile/following')}} data-testid="profileFollowingButton"> Following List </button>
-            <button onClick={() => {navigate('/profile/edit')}} data-testid="profileSettingsButton"> Edit Info </button>
+            <h1 style={{ textAlign: 'center' }}>{username}</h1>
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+                <div style={{ flex: 1, textAlign: 'center' }}>
+                    <strong>Followers:</strong> {followersAmount}
+                </div>
+                <div style={{ flex: 1, textAlign: 'center' }}>
+                    <strong>Following:</strong> {followingAmount}
+                </div>
+                <div style={{ flex: 1, textAlign: 'center' }}>
+                    <strong>Likes Sent:</strong> {likesSentAmount}
+                </div>
+                <div style={{ flex: 1, textAlign: 'center' }}>
+                    <strong>Likes Recived:</strong> {likesRecivedAmount}
+                </div>
+                <div style={{ flex: 1, textAlign: 'center' }}>
+                    <strong>Posts:</strong> {postsCreatedAmount}
+                </div>
+                <div style={{ flex: 1, textAlign: 'center' }}>
+                    <strong>Saved Posts:</strong> {savesAmount}
+                </div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+                <button onClick={() => {navigate('/profile/following')}} data-testid="profileFollowingButton"> Following List </button>
+                <button onClick={() => {navigate('/profile/edit')}} data-testid="profileSettingsButton"> Edit Info </button>
+            </div> 
             <div>
                 {Array.isArray(posts) && posts.map(post => (
                     <div key={post._id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0', position: 'relative', display: 'flex' }}>

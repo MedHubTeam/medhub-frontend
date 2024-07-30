@@ -10,7 +10,7 @@ async function preformRegister(username, email, password, confirmPassword, profe
 }
 
 async function checkEmailExists(email) {
-    const url = `https://medhub-backend.onrender.com/register/exist?email=${email}`
+    const url = `https://medhub-backend.onrender.com/register/exist?email=${encodeURIComponent(email)}`
     const response = await fetch(url, {
         method: 'GET'
     })
@@ -18,7 +18,7 @@ async function checkEmailExists(email) {
 }
 
 async function checkUsernameExists(username) {
-    const url = `https://medhub-backend.onrender.com/register/exist?username=${username}`
+    const url = `https://medhub-backend.onrender.com/register/exist?username=${encodeURIComponent(username)}`
     const response = await fetch(url, {
         method: 'GET'
     })

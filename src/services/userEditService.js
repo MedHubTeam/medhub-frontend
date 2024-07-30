@@ -7,40 +7,38 @@ async function deleteUser(id) {
 }
 
 async function updateUsername(id, newUsername) {
-    const url = `https://medhub-backend.onrender.com/setUser/username?id=${id}`
+    const url = `https://medhub-backend.onrender.com/user/set/username?id=${id}&value=${encodeURIComponent(newUsername)}`
     const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id, newUsername }),
+        method: 'GET'
     })
     return await response.json()
 }
 
 async function updateEmail(id, newEmail) {
-    const url = `https://medhub-backend.onrender.com/setUser/email?id=${id}`
+    const url = `https://medhub-backend.onrender.com/user/set/email?id=${id}&value=${encodeURIComponent(newEmail)}`
     const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id, newEmail }),
+        method: 'GET'
     })
     return await response.json()
 }
 
 async function updateProfession(id, newProfession) {
-    const url = `https://medhub-backend.onrender.com/setUser/profession?id=${id}`
+    const url = `https://medhub-backend.onrender.com/user/set/profession?id=${id}&value=${encodeURIComponent(newProfession)}`
     const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id, newProfession }),
+        method: 'GET'
     })
     return await response.json()
 }
 
-module.exports = { deleteUser, updateUsername, updateEmail, updateProfession }
+async function updateUserDetails(id, field, newValue) {
+    if (field === 'username') {
+        return await updateUsername(id, newValue)
+    } else if (field === 'email') {
+        return await updateEmail(id, newValue)
+    } else if (field === 'profession') {
+        return await updateProfession(id, newValue)
+    }
+}
+
+module.exports = { deleteUser, updateUserDetails }
 

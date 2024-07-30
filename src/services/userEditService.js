@@ -40,5 +40,13 @@ async function updateUserDetails(id, field, newValue) {
     }
 }
 
-module.exports = { deleteUser, updateUserDetails }
+async function updatePassword(id, oldPassword, newPassword) {
+    const url = `https://medhub-backend.onrender.com/user/set/password?id=${id}&oldpass=${encodeURIComponent(oldPassword)}&newpass=${encodeURIComponent(newPassword)}`
+    const response = await fetch(url, {
+        method: 'GET'
+    })
+    return await response.json()
+}
+
+module.exports = { deleteUser, updateUserDetails, updatePassword }
 

@@ -22,7 +22,7 @@ const NavBar = () => {
                     <Link to="/home" data-testid="homeNavButton">Home</Link>
                 </li>
                 <li>
-                    <Link to="/profile" data-testid="profileNavButton">profile</Link>
+                    <Link to="/profile" data-testid="profileNavButton">Profile</Link>
                 </li>
                 <li>
                     <Link to="/about" data-testid="aboutNavButton">About Us</Link>

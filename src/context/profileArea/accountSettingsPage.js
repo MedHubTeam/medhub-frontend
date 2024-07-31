@@ -135,12 +135,12 @@ function AccountSettingsPage() {
         })
     }
 
-    if (!profession) return <div><NavBar/><h1>Loading...</h1></div>
+    if (!profession) return <div><NavBar data-testid="navigation" /><h1>Loading...</h1></div>
 
     return (
         <div className="AccountSettingsPage">
             <header className="AccountSettingsPage-header">
-                <NavBar />
+                <NavBar data-testid="navigation" />
                 <form onSave={handleSave}></form>
                 <div className="user-details">
                     <label>
@@ -193,6 +193,7 @@ function AccountSettingsPage() {
                         Old Password:
                         <input
                             type="password"
+                            data-testid="oldPasswordInput"
                             value={oldPassword}
                             onChange={(e) => setOldPassword(e.target.value)}
                         />
@@ -201,18 +202,19 @@ function AccountSettingsPage() {
                         New Password:
                         <input
                             type="password"
+                            data-testid="newPasswordInput"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                         />
                     </label>
-                    <button onClick={handleChangePassword}>Change Password</button>
+                    <button data-testid="changePasswordButton" onClick={handleChangePassword}>Change Password</button>
                 </div>
                 {isEditing ? (
-                    <button onClick={handleSave}>Save</button>
+                    <button data-testid="saveButton" onClick={handleSave}>Save</button>
                 ) : (
-                    <button onClick={handleEdit}>Edit</button>
+                    <button data-testid="editButton" onClick={handleEdit}>Edit</button>
                 )}
-                <button onClick={deleteOnClick}>Delete User</button>
+                <button data-testid="deleteUserButton" onClick={deleteOnClick}>Delete User</button>
             </header>
         </div>
     )

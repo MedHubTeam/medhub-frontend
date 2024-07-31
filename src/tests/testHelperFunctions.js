@@ -1,7 +1,8 @@
 // Import react libraries
 import { BrowserRouter } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
-
+import { MemoryRouter } from 'react-router-dom'
+import AccountSettingsPage from '../context/profileArea/accountSettingsPage'
 
 const RouterRender = (element) => {
     render(
@@ -15,4 +16,12 @@ const elementExists = (elementTestId) => {
     return screen.queryByTestId(elementTestId) !== null
 }
 
-module.exports = { RouterRender, elementExists }
+const RenderAccountSettings = () => {
+    render(
+        <MemoryRouter>
+            <AccountSettingsPage initialUsername="testUser" initialEmail="test@example.com" initialProfession="Doctor" />
+        </MemoryRouter>
+    )
+}
+
+module.exports = { RouterRender, elementExists, RenderAccountSettings }

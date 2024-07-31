@@ -8,10 +8,10 @@ import { loggedInUser } from '../../services/loggedUser'
 import { useNavigate } from 'react-router-dom'
 
 
-function AccountSettingsPage() {
-    const [username, setUsername] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [profession, setProfession] = useState(null)
+function AccountSettingsPage({ initialUsername = null, initialEmail = null, initialProfession = null }) {
+    const [username, setUsername] = useState(initialUsername)
+    const [email, setEmail] = useState(initialEmail)
+    const [profession, setProfession] = useState(initialProfession)
     const [isEditing, setIsEditing] = useState(false)
     const navigate = useNavigate()
     const [oldPassword, setOldPassword] = useState('')
@@ -135,12 +135,12 @@ function AccountSettingsPage() {
         })
     }
 
-    if (!profession) return <div><NavBar data-testid="navigation" /><h1>Loading...</h1></div>
+    if (!profession) return <div><NavBar /><h1>Loading...</h1></div>
 
     return (
         <div className="AccountSettingsPage">
             <header className="AccountSettingsPage-header">
-                <NavBar data-testid="navigation" />
+                <NavBar />
                 <form onSave={handleSave}></form>
                 <div className="user-details">
                     <label>

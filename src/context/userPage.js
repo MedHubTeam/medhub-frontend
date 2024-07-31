@@ -58,7 +58,7 @@ function UserPage() {
     }
 
 
-    if (!username) return <div>Loading...</div>
+    if (!username) return <div><NavBar/><h1>Loading...</h1></div>
 
     return (
         <div>

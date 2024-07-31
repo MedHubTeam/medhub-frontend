@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { loggedInUser } from '../../services/loggedUser'
 import { getFollowingList, getUsername } from '../../services/userInfoService'
 import { unfollowUser } from '../../services/followService'
+import NavBar from '../../components/navBar'
 
 function FollowingPage(){
     const [users, setUsers] = useState([])
@@ -39,6 +40,7 @@ function FollowingPage(){
     
     if (users.length === 0) return (
         <div>
+            <NavBar />
             <h1>Following</h1>
             <button onClick={() => navigate('/profile')} data-testid="followingGoBackButton">Go Back to Profile</button>
         </div>
@@ -46,6 +48,7 @@ function FollowingPage(){
     
     return (
         <div>
+            <NavBar />
             <h1>Following</h1>
             <ul>
                 {users.map(user => (

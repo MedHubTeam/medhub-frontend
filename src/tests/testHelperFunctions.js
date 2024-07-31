@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
 
 
-export const RouterRender = (element) => {
+const RouterRender = (element) => {
     render(
         <BrowserRouter>
             {element}
@@ -11,6 +11,8 @@ export const RouterRender = (element) => {
     )
 }
 
-export const elementExists = (elementTestId) => {
+const elementExists = (elementTestId) => {
     return screen.queryByTestId(elementTestId) !== null
 }
+
+module.exports = { RouterRender, elementExists }

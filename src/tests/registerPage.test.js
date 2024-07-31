@@ -1,6 +1,6 @@
 // Import react library and react testing library
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 
 // Import helper functions to use for testing
 import { elementExists, RouterRender } from './testHelperFunctions'

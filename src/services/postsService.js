@@ -32,4 +32,18 @@ async function editPost(postId, content) {
     return response.text()
 }
 
-export { fetchPosts, createPost, deletePost, editPost, fetchUserPosts }
+async function fetchLikedPosts(userId) {
+    const url = `${BASE_URL}/liked?user_id=${userId}`
+    const response = await fetch(url, { method: 'GET' })
+    const posts = await response.json()
+    return Array.isArray(posts) ? posts : []
+}
+
+async function fetchSavedPosts(userId) {
+    const url = `${BASE_URL}/saved?user_id=${userId}`
+    const response = await fetch(url, { method: 'GET' })
+    const posts = await response.json()
+    return Array.isArray(posts) ? posts : []
+}
+
+export { fetchPosts, createPost, deletePost, editPost, fetchUserPosts, fetchLikedPosts, fetchSavedPosts }

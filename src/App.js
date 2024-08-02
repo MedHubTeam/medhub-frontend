@@ -11,6 +11,8 @@ import ProfilePage from './context/profileArea/profilePage'
 import AccountSettingsPage from './context/profileArea/accountSettingsPage'
 import FollowingPage from './context/profileArea/followingPage'
 import UserPage from './context/userPage'
+import LikedPostsPage from './context/profileArea/likedPostsPage'
+import SavedPostsPage from './context/profileArea/savedPostsPage'
 
 function App() {
     return (
@@ -20,6 +22,8 @@ function App() {
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/profile/following" element={<FollowingPage />} />
                 <Route path="/profile/edit" element={<AccountSettingsPage />} />
+                <Route path="/profile/liked" element={<LikedPostsPage />} />
+                <Route path="/profile/saved" element={<SavedPostsPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />

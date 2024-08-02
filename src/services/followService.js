@@ -6,4 +6,4 @@ async function unfollowUser(id, following) {
     return await response.json()
 }
 
-module.exports = { unfollowUser }
+module.exports = { unfollowUser } 

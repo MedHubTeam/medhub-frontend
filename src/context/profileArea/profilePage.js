@@ -103,6 +103,8 @@ function ProfilePage(){
             <div style={{ textAlign: 'center' }}>
                 <button onClick={() => {navigate('/profile/following')}} data-testid="profileFollowingButton"> Following List </button>
                 <button onClick={() => {navigate('/profile/edit')}} data-testid="profileSettingsButton"> Edit Info </button>
+                <button onClick={() => {navigate('/profile/liked')}} data-testid="profileLikedPostsButton"> Liked Posts </button>
+                <button onClick={() => {navigate('/profile/saved')}} data-testid="profileSavedPostsButton"> Saved Posts </button>
             </div> 
             <div>
                 {Array.isArray(posts) && posts.map(post => (

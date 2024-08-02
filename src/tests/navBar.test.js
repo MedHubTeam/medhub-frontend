@@ -15,6 +15,8 @@ import ProfilePage from '../context/profileArea/profilePage'
 import UserPage from '../context/userPage'
 import AccountSettingsPage from '../context/profileArea/accountSettingsPage'
 import FollowingPage from '../context/profileArea/followingPage'
+import SavedPostsPage from '../context/profileArea/savedPostsPage'
+import LikedPostsPage from '../context/profileArea/likedPostsPage'
 
 
 describe('Checks Nav Bar Buttons', () => {
@@ -67,6 +69,14 @@ describe('Checks if Nav Bar exists or doesnt in all pages', () => {
     })
     test('Checks NavBar exists in "userPage"', () => {
         RouterRender(<UserPage />)
+        expect(elementExists('navBarWrapper')).toBe(true)
+    })
+    test('Checks NavBar exists in "LikedPostsPage"', () => {
+        RouterRender(<LikedPostsPage />)
+        expect(elementExists('navBarWrapper')).toBe(true)
+    })
+    test('Checks NavBar exists in "SavedPostsPage"', () => {
+        RouterRender(<SavedPostsPage />)
         expect(elementExists('navBarWrapper')).toBe(true)
     })
 })

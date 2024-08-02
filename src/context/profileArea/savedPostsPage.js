@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 // Import services and helper functions
 import { loggedInUser } from '../../services/loggedUser'
-import { deletePost, editPost, fetchSavedPosts } from '../services/postsService'
+import { deletePost, editPost, fetchSavedPosts } from '../../services/postsService'
 import NavBar from '../../components/navBar'
 
 function SavedPostsPage(){

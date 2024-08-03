@@ -33,7 +33,7 @@ const RenderAccountSettings = () => {
 const RenderFollowingPage = () => {
     render(
         <MemoryRouter>
-            <FollowingPage initialUsers={[{ id: "66a57d75049b960648b68ebc", username: "user1" }]} />
+            <FollowingPage initialUsers={[{ id: '66a57d75049b960648b68ebc', username: 'user1' }]} />
         </MemoryRouter>
     )
 }

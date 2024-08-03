@@ -39,19 +39,16 @@ const RenderHomePage = async () => {
     })
 }
 
-//mock and sync to test the edit/delete posts as they need's to be loaded to edit/delete .
-const setupMocks = () => {
+const MockFetchPosts = () => {
     const postsService = require('../services/postsService')
-    const loggedUser = require('../services/loggedUser').loggedInUser
-
     postsService.fetchPosts = async () => [
         { _id: '66ae3eb28fa90888c16c8d51', user_id: '669ec453282db39dd89bb9ec', username: 'test', content: 'test1' },
         { _id: '66ae3ee48fa90888c16c8d52', user_id: '669ec453282db39dd89bb9ec', username: 'test', content: 'test2' }
     ]
-    postsService.createPost = async () => {}
-    postsService.deletePost = async () => {}
-    postsService.editPost = async () => {}
+}
 
+const MockLoggedUser = () => {
+    const loggedUser = require('../services/loggedUser').loggedInUser
     loggedUser.getUserId = () => '669ec453282db39dd89bb9ec'
     loggedUser.checkLoggedInForPage = () => false
 }
@@ -62,5 +59,6 @@ module.exports = {
     elementAllExist,
     RenderAccountSettings,
     RenderHomePage,
-    setupMocks
+    MockFetchPosts,
+    MockLoggedUser
 }

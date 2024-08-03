@@ -1,41 +1,43 @@
-import React from 'react'
 import '@testing-library/jest-dom'
-import { elementExists, elementAllExist, RenderHomePage, setupMocks } from './testHelperFunctions'
-import { screen, fireEvent } from '@testing-library/react'
+import { elementExists, elementAllExist, RenderHomePage, MockFetchPosts, MockLoggedUser } from './testHelperFunctions'
+import { screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
-// Setup mocks before all the tests
+// Setup mocks before all tests
 beforeAll(() => {
-    setupMocks()
+    MockFetchPosts()
+    MockLoggedUser()
 })
 
 describe('HomePage', () => {
-    beforeEach(async () => {
+    test('renders post inputs', async () => {
         await RenderHomePage()
-    })
-
-    test('renders post inputs', () => {
         expect(elementExists('identifierPostInput')).toBe(true)
         expect(elementExists('submitPostInputButton')).toBe(true)
     })
 
-    test('renders edit post inputs', () => {
+    test('renders edit post inputs', async () => {
+        await RenderHomePage()
         expect(elementAllExist('submitEditPostInputButton')).toBe(true)
     })
 
-    test('renders edit post content input after clicking edit', () => {
+    test('renders edit post content input after clicking edit', async () => {
+        await RenderHomePage()
         const editButtons = screen.getAllByTestId('submitEditPostInputButton')
-        fireEvent.click(editButtons[0])
+        await userEvent.click(editButtons[0])
         expect(elementExists('identifierEditPostInput')).toBe(true)
         expect(elementExists('submitSaveEditPostInputButton')).toBe(true)
     })
 
-    test('renders cancel edit post inputs after clicking edit', () => {
+    test('renders cancel edit post inputs after clicking edit', async () => {
+        await RenderHomePage()
         const editButtons = screen.getAllByTestId('submitEditPostInputButton')
-        fireEvent.click(editButtons[0])
+        await userEvent.click(editButtons[0])
         expect(elementExists('submitCancelEditInputButton')).toBe(true)
     })
 
-    test('renders delete post inputs', () => {
+    test('renders delete post inputs', async () => {
+        await RenderHomePage()
         expect(elementAllExist('identifierDeletePostInput')).toBe(true)
     })
 })

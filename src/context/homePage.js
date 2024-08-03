@@ -47,14 +47,14 @@ function HomePage() {
             setEditContent('')
         }
     }
-//UI homepage
+
     return (
         <div>
             <NavBar />
             <h1>Home Page</h1>
             <div>
                 <textarea
-					data-testid="identifierPostInput"
+                    data-testid="identifierPostInput"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="What's on your mind?"
@@ -81,7 +81,7 @@ function HomePage() {
                         {isEditing && editPostId === post._id && (
                             <div style={{ position: 'absolute', right: '10px', top: '10px', backgroundColor: '#f9f9f9', padding: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                 <textarea
-									data-testid="identifierEditPostInput"
+                                    data-testid="identifierEditPostInput"
                                     value={editContent}
                                     onChange={(e) => setEditContent(e.target.value)}
                                     rows="3"

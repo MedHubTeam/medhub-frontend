@@ -80,7 +80,7 @@ function ProfilePage(){
         <div>
             <NavBar />
             <h1 style={{ textAlign: 'center' }}>{username}</h1>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }} data-testid="profileStatsWrapper">
                 <div style={{ flex: 1, textAlign: 'center' }}>
                     <strong>Followers:</strong> {followersAmount}
                 </div>

@@ -47,7 +47,7 @@ function HomePage() {
             setEditContent('')
         }
     }
-
+//UI homepage
     return (
         <div>
             <NavBar />

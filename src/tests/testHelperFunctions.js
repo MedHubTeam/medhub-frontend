@@ -39,7 +39,7 @@ const RenderHomePage = async () => {
     })
 }
 
-//mock and sync to test the edit/delete posts as they need's to be loaded to edit/delete.
+//mock and sync to test the edit/delete posts as they need's to be loaded to edit/delete .
 const setupMocks = () => {
     const postsService = require('../services/postsService')
     const loggedUser = require('../services/loggedUser').loggedInUser

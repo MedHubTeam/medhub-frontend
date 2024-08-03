@@ -3,7 +3,7 @@ import '@testing-library/jest-dom'
 import { elementExists, elementAllExist, RenderHomePage, setupMocks } from './testHelperFunctions'
 import { screen, fireEvent } from '@testing-library/react'
 
-// Setup mocks before all tests
+// Setup mocks before all the tests
 beforeAll(() => {
     setupMocks()
 })

@@ -54,11 +54,12 @@ function HomePage() {
             <h1>Home Page</h1>
             <div>
                 <textarea
+                    data-testid="identifierPostInput"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="What's on your mind?"
                 />
-                <button onClick={handlePostMessage}>Post</button>
+                <button data-testid="submitPostInputButton" onClick={handlePostMessage}>Post</button>
             </div>
             <div>
                 {Array.isArray(posts) && posts.map(post => (
@@ -69,24 +70,25 @@ function HomePage() {
                         </div>
                         {post.user_id === loggedInUser.getUserId() && (
                             <div style={{ marginLeft: 'auto' }}>
-                                <button onClick={() => {
+                                <button data-testid="submitEditPostInputButton" onClick={() => {
                                     setEditContent(post.content)
                                     setEditPostId(post._id)
                                     setIsEditing(true)
                                 }}>Edit</button>
-                                <button onClick={() => handleDeletePost(post._id)}>Delete</button>
+                                <button data-testid="identifierDeletePostInput" onClick={() => handleDeletePost(post._id)}>Delete</button>
                             </div>
                         )}
                         {isEditing && editPostId === post._id && (
                             <div style={{ position: 'absolute', right: '10px', top: '10px', backgroundColor: '#f9f9f9', padding: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                                 <textarea
+                                    data-testid="identifierEditPostInput"
                                     value={editContent}
                                     onChange={(e) => setEditContent(e.target.value)}
                                     rows="3"
                                     style={{ width: '200px' }}
                                 />
-                                <button onClick={handleEditPost}>Save</button>
-                                <button onClick={() => {
+                                <button data-testid="submitSaveEditPostInputButton" onClick={handleEditPost}>Save</button>
+                                <button data-testid="submitCancelEditInputButton" onClick={() => {
                                     setIsEditing(false)
                                     setEditPostId(null)
                                     setEditContent('')

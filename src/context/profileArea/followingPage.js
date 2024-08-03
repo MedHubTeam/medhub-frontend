@@ -8,8 +8,8 @@ import { getFollowingList, getUsername } from '../../services/userInfoService'
 import { unfollowUser } from '../../services/followService'
 import NavBar from '../../components/navBar'
 
-function FollowingPage(){
-    const [users, setUsers] = useState([])
+function FollowingPage({ initialUsers = [] }){
+    const [users, setUsers] = useState(initialUsers)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -54,8 +54,8 @@ function FollowingPage(){
                 {users.map(user => (
                     <li key={user.id}>
                         {user.username}
-                        <button onClick={() => navigate(`/user/${user.id}`)}>Go to Profile</button>
-                        <button onClick={async () => {
+                        <button data-testid="goToProfileButton" onClick={() => navigate(`/user/${user.id}`)}>Go to Profile</button>
+                        <button data-testid="removeFollowButton" onClick={async () => {
                             await unfollowUser(loggedInUser.getUserId(), user.id)
                             fetchContent()
                         }}>Remove Follow</button>

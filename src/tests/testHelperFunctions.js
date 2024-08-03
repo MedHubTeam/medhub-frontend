@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import AccountSettingsPage from '../context/profileArea/accountSettingsPage'
+import FollowingPage from '../context/profileArea/followingPage'
 
 const RouterRender = (element) => {
     render(
@@ -24,4 +25,12 @@ const RenderAccountSettings = () => {
     )
 }
 
-module.exports = { RouterRender, elementExists, RenderAccountSettings }
+const RenderFollowingPage = () => {
+    render(
+        <MemoryRouter>
+            <FollowingPage initialUsers={[{ id: "66a57d75049b960648b68ebc", username: "user1" }]} />
+        </MemoryRouter>
+    )
+}
+
+module.exports = { RouterRender, elementExists, RenderAccountSettings, RenderFollowingPage }

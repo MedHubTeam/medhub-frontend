@@ -1,9 +1,10 @@
-// Import react libraries
 import { BrowserRouter } from 'react-router-dom'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import AccountSettingsPage from '../context/profileArea/accountSettingsPage'
+import HomePage from '../context/homePage'
 
+// Helper function to render with Router
 const RouterRender = (element) => {
     render(
         <BrowserRouter>
@@ -16,6 +17,10 @@ const elementExists = (elementTestId) => {
     return screen.queryByTestId(elementTestId) !== null
 }
 
+const elementAllExist = (elementTestId) => {
+    return screen.queryAllByTestId(elementTestId).length > 0
+}
+
 const RenderAccountSettings = () => {
     render(
         <MemoryRouter>
@@ -24,4 +29,38 @@ const RenderAccountSettings = () => {
     )
 }
 
-module.exports = { RouterRender, elementExists, RenderAccountSettings }
+const RenderHomePage = async () => {
+    await act(async () => {
+        render(
+            <MemoryRouter>
+                <HomePage />
+            </MemoryRouter>
+        )
+    })
+}
+
+//mock and sync to test the edit/delete posts as they need's to be loaded to edit/delete.
+const setupMocks = () => {
+    const postsService = require('../services/postsService')
+    const loggedUser = require('../services/loggedUser').loggedInUser
+
+    postsService.fetchPosts = async () => [
+        { _id: '66ae3eb28fa90888c16c8d51', user_id: '669ec453282db39dd89bb9ec', username: 'test', content: 'test1' },
+        { _id: '66ae3ee48fa90888c16c8d52', user_id: '669ec453282db39dd89bb9ec', username: 'test', content: 'test2' }
+    ]
+    postsService.createPost = async () => {}
+    postsService.deletePost = async () => {}
+    postsService.editPost = async () => {}
+
+    loggedUser.getUserId = () => '669ec453282db39dd89bb9ec'
+    loggedUser.checkLoggedInForPage = () => false
+}
+
+module.exports = {
+    RouterRender,
+    elementExists,
+    elementAllExist,
+    RenderAccountSettings,
+    RenderHomePage,
+    setupMocks
+}

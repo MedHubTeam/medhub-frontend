@@ -8,10 +8,6 @@ class LoggedUserClass {
         this.#userID = data['data']['userID']
     }
 
-    printUser(){
-        console.log(this.#userID)
-    }
-
     getUserId(){
         return this.#userID
     }

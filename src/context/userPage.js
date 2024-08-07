@@ -64,6 +64,7 @@ function UserPage() {
         <div>
             <NavBar />
             <h1>{username}'s Profile</h1>
+            <button data-testid="goToDMButton" onClick={() => navigate(`/chat/${userId}`)}>Message</button>
             <div>
                 {Array.isArray(posts) && posts.map(post => (
                     <div key={post._id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0', position: 'relative', display: 'flex' }}>

@@ -13,6 +13,7 @@ import FollowingPage from './context/profileArea/followingPage'
 import UserPage from './context/userPage'
 import LikedPostsPage from './context/profileArea/likedPostsPage'
 import SavedPostsPage from './context/profileArea/savedPostsPage'
+import PrivateChatPage from './context/privateChatPage'
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/user/:userId" element={<UserPage />} />
+                <Route path="/chat/:userId" element={<PrivateChatPage />} />
             </Routes>
         </Router>
     )

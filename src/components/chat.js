@@ -22,7 +22,8 @@ const Chat = ({ chat_id = null }) => {
         websocket.onmessage = async (event) => {
             const newMessage = JSON.parse(event.data)
             const newMessageData = await getMessageData(newMessage['message_id'])
-            setMessages(prevMessages => [...prevMessages, newMessageData])
+            console.log(newMessageData.data)
+            setMessages(prevMessages => [...prevMessages, newMessageData.data])
         }
 
         return () => {
@@ -46,7 +47,7 @@ const Chat = ({ chat_id = null }) => {
             <div>
                 {messages.map((msg, index) => (
                     <div key={index}>
-                        <strong>{msg.username}:</strong> {msg.content}
+                        <strong>{msg.username}:</strong> {msg.message}
                         <span>({new Date(msg.timestamp).toLocaleTimeString()})</span>
                     </div>
                 ))}

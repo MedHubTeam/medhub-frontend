@@ -33,7 +33,6 @@ const Chat = ({ chat_id = null }) => {
     }, [chat_id])
 
     useEffect(() => {
-        // Ensure smooth scrolling to the bottom
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
     }, [messages])
 
@@ -60,7 +59,14 @@ const Chat = ({ chat_id = null }) => {
                             <strong>{msg.username}:</strong> {msg.message}
                         </div>
                         <div className="message-time">
-                            {new Date(msg.timestamp).toLocaleTimeString()}
+                            {(new Date(msg.timestamp).toDateString() === new Date().toDateString()) ?
+                                (new Intl.DateTimeFormat('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(msg.timestamp))) : 
+                                (
+                                    <>
+                                        {new Intl.DateTimeFormat('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(msg.timestamp))} {new Intl.DateTimeFormat('he-IL', { day: '2-digit', month: '2-digit', year: '2-digit' }).format(new Date(msg.timestamp)).replace(/\./g, '/')}
+                                    </>
+                                )
+                            }
                         </div>
                     </div>
                 ))}

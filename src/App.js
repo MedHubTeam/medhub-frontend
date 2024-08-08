@@ -14,6 +14,8 @@ import UserPage from './context/userPage'
 import LikedPostsPage from './context/profileArea/likedPostsPage'
 import SavedPostsPage from './context/profileArea/savedPostsPage'
 import PrivateChatPage from './context/privateChatPage'
+import GroupBrowserPage from './context/groupsBrowserPage'
+import GroupPage from './context/groupPage'
 
 function App() {
     return (
@@ -30,6 +32,8 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/user/:userId" element={<UserPage />} />
                 <Route path="/chat/:userId" element={<PrivateChatPage />} />
+                <Route path="/groups" element={<GroupBrowserPage />} />
+                <Route path="/groups/:id" element={<GroupPage />} />
             </Routes>
         </Router>
     )

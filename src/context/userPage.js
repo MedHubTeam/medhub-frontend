@@ -5,7 +5,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 // Import services and helper functions
 import { getUsername } from '../services/userInfoService'
 import { loggedInUser } from '../services/loggedUser'
-import { fetchUserPosts, deletePost, editPost } from '../services/postsService'
+import { fetchUserPosts } from '../services/postsService'
+import { checkIfFollowing, unfollowUser, followUser } from '../services/followService'
 
 import NavBar from '../components/navBar'
 
@@ -14,14 +15,15 @@ function UserPage() {
     const { userId } = useParams()
     const [username, setUsername] = useState(null)
     const [posts, setPosts] = useState([])
-    const [isEditing, setIsEditing] = useState(false)
-    const [editContent, setEditContent] = useState('')
-    const [editPostId, setEditPostId] = useState(null)
+    const [isFollowing, setIsFollowing] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
         if (loggedInUser.checkLoggedInForPage()) {
             navigate('/')
+        }
+        if (userId === loggedInUser.getUserId()) {
+            navigate('/profile')
         }
     }, [navigate])
 
@@ -29,6 +31,10 @@ function UserPage() {
         const fetchUserProfile = async () => {
             const data = await getUsername(userId)
             if (data.status === 'successful') {
+                const followingData = await checkIfFollowing(loggedInUser.getUserId(), userId)
+                if (followingData.status === 'successful') {
+                    setIsFollowing(true)
+                }
                 setUsername(data.data.username)
             }
         }
@@ -42,21 +48,19 @@ function UserPage() {
         loadPosts()
     }, [userId])
 
-    const handleDeletePost = async (postId) => {
-        await deletePost(postId)
-        setPosts(prevPosts => prevPosts.filter(post => post._id !== postId))
-    }
-
-    const handleEditPost = async () => {
-        if (editPostId && editContent.trim()) {
-            await editPost(editPostId, editContent)
-            setPosts(prevPosts => prevPosts.map(post => post._id === editPostId ? { ...post, content: editContent } : post))
-            setIsEditing(false)
-            setEditPostId(null)
-            setEditContent('')
+    const handleUnFollowUser = async () => {
+        const data = await unfollowUser(loggedInUser.getUserId(), userId)
+        if (data.status === 'successful') {
+            setIsFollowing(false)
         }
     }
 
+    const handleFollowUser = async () => {
+        const data = await followUser(loggedInUser.getUserId(), userId)
+        if (data.status === 'successful') {
+            setIsFollowing(true)
+        }
+    }
 
     if (!username) return <div><NavBar/><h1>Loading...</h1></div>
 
@@ -65,6 +69,15 @@ function UserPage() {
             <NavBar />
             <h1>{username}'s Profile</h1>
             <button data-testid="goToDMButton" onClick={() => navigate(`/chat/${userId}`)}>Message</button>
+            {isFollowing ? (
+                <div>
+                    <button data-testid="unFollowUserButton" onClick={handleUnFollowUser}> UnFollow User </button>
+                </div>
+            ) : (
+                <div>
+                    <button data-testid="followUserButton" onClick={handleFollowUser}> Follow User </button>
+                </div>
+            )}
             <div>
                 {Array.isArray(posts) && posts.map(post => (
                     <div key={post._id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0', position: 'relative', display: 'flex' }}>
@@ -72,32 +85,6 @@ function UserPage() {
                             <h2>{post.username}</h2>
                             <p>{post.content}</p>
                         </div>
-                        {post.user_id === loggedInUser.getUserId() && (
-                            <div style={{ marginLeft: 'auto' }}>
-                                <button onClick={() => {
-                                    setEditContent(post.content)
-                                    setEditPostId(post._id)
-                                    setIsEditing(true)
-                                }}>Edit</button>
-                                <button onClick={() => handleDeletePost(post._id)}>Delete</button>
-                            </div>
-                        )}
-                        {isEditing && editPostId === post._id && (
-                            <div style={{ position: 'absolute', right: '10px', top: '10px', backgroundColor: '#f9f9f9', padding: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-                                <textarea
-                                    value={editContent}
-                                    onChange={(e) => setEditContent(e.target.value)}
-                                    rows="3"
-                                    style={{ width: '200px' }}
-                                />
-                                <button onClick={handleEditPost}>Save</button>
-                                <button onClick={() => {
-                                    setIsEditing(false)
-                                    setEditPostId(null)
-                                    setEditContent('')
-                                }}>Cancel</button>
-                            </div>
-                        )}
                     </div>
                 ))}
             </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { fetchPosts, createPost, deletePost, editPost } from '../services/postsService'
 import NavBar from '../components/navBar'
 import { loggedInUser } from '../services/loggedUser'
@@ -65,8 +65,20 @@ function HomePage() {
                 {Array.isArray(posts) && posts.map(post => (
                     <div key={post._id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0', position: 'relative', display: 'flex' }}>
                         <div style={{ flex: 1 }}>
-                            <h2>{post.username}</h2>
-                            <p>{post.content}</p>
+                            {!(post.user_id === loggedInUser.getUserId()) ? (
+                                <div>
+                                    <Link to={`/user/${post.user_id}`} style={{ color:'inherit', 'text-decoration': 'none' }}>
+                                        <h2>{post.username}</h2>
+                                    </Link>
+                                    <p>{post.content}</p>
+                                </div>
+                            ) : (
+                                <div>
+                                    <h2>{post.username}</h2>
+                                    <p>{post.content}</p>
+                                </div>
+                            )}
+                        
                         </div>
                         {post.user_id === loggedInUser.getUserId() && (
                             <div style={{ marginLeft: 'auto' }}>

@@ -46,4 +46,11 @@ async function fetchSavedPosts(userId) {
     return Array.isArray(posts) ? posts : []
 }
 
-export { fetchPosts, createPost, deletePost, editPost, fetchUserPosts, fetchLikedPosts, fetchSavedPosts }
+async function searchUsers(query) {
+    const url = `${BASE_URL}/search?username=${username}}`
+    const response = await fetch(url, { method: 'GET' })
+    const users = await response.json()
+    return Array.isArray(users) ? users : []
+}
+
+export { fetchPosts, createPost, deletePost, editPost, fetchUserPosts, fetchLikedPosts, fetchSavedPosts, searchUsers  }

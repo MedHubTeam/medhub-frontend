@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { fetchPosts, createPost, deletePost, editPost } from '../services/postsService'
+import { fetchPosts, createPost, deletePost, editPost, searchUsers } from '../services/postsService'
 import NavBar from '../components/navBar'
 import { loggedInUser } from '../services/loggedUser'
 
 function HomePage() {
     const navigate = useNavigate()
+    const [username, setUsername] = useState('') 
     const [message, setMessage] = useState('')
     const [posts, setPosts] = useState([])
     const [isEditing, setIsEditing] = useState(false)
     const [editContent, setEditContent] = useState('')
     const [editPostId, setEditPostId] = useState(null)
+    const [searchResults, setSearchResults] = useState([])
 
     useEffect(() => {
         if (loggedInUser.checkLoggedInForPage()) {
@@ -48,18 +50,53 @@ function HomePage() {
         }
     }
 
+    const handleSearch = async () => {
+        const results = await searchUsers(username)
+        setSearchResults(results.data)
+    }
+
+    const handleUserClick = (userId) => {
+        navigate(`/user/${userId}`)
+    }
+
     return (
         <div>
             <NavBar />
             <h1>Home Page</h1>
             <div>
-                <textarea
-                    data-testid="identifierPostInput"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="What's on your mind?"
+                <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Search by username or profession"
+                    data-testid="searchInput"
                 />
-                <button data-testid="submitPostInputButton" onClick={handlePostMessage}>Post</button>
+                <button onClick={handleSearch} data-testid="searchButton">Search</button>
+            </div>
+            <div>
+                {searchResults.length > 0 ? (
+                    <div>
+                        <h2>Search Results:</h2>
+                        {searchResults.map(user => (
+                            <div key={user._id}>
+                                <div key={user._id} onClick={() => handleUserClick(user._id)}>
+                                    <h3>{user.username}</h3>
+                                    <p>{user.profession}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div>
+                        <textarea
+                            data-testid="identifierPostInput"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            placeholder="What's on your mind?"
+                        />
+                        <button data-testid="submitPostInputButton" onClick={handlePostMessage}>Post</button>
+                    </div>
+                )}
             </div>
             <div>
                 {Array.isArray(posts) && posts.map(post => (
@@ -78,7 +115,6 @@ function HomePage() {
                                     <p>{post.content}</p>
                                 </div>
                             )}
-                        
                         </div>
                         {post.user_id === loggedInUser.getUserId() && (
                             <div style={{ marginLeft: 'auto' }}>

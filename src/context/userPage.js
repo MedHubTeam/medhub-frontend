@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 // Import services and helper functions
 import { getUsername } from '../services/userInfoService'
 import { loggedInUser } from '../services/loggedUser'
-import { fetchUserPosts } from '../services/postsService'
+import { fetchUserPosts, isLikedPost, isSavedPost, likePost, savePost, unlikePost, unsavePost } from '../services/postsService'
 import { checkIfFollowing, unfollowUser, followUser } from '../services/followService'
 
 import NavBar from '../components/navBar'
@@ -41,7 +41,12 @@ function UserPage() {
 
         const loadPosts = async () => {
             const postsData = await fetchUserPosts(userId)
-            setPosts(postsData.reverse())
+            const postsWithStatus = await Promise.all(postsData.map(async (post) => {
+                const isLiked = await isLikedPost(loggedInUser.getUserId(), post._id)
+                const isSaved = await isSavedPost(loggedInUser.getUserId(), post._id)
+                return { ...post, isLiked: isLiked.status === 'successful', isSaved: isSaved.status === 'successful' }
+            }))
+            setPosts(postsWithStatus.reverse())
         }
 
         fetchUserProfile()
@@ -60,6 +65,24 @@ function UserPage() {
         if (data.status === 'successful') {
             setIsFollowing(true)
         }
+    }
+
+    const toggleLikePost = async (postId, isCurrentlyLiked) => {
+        if (isCurrentlyLiked) {
+            await unlikePost(loggedInUser.getUserId(), postId)
+        } else {
+            await likePost(loggedInUser.getUserId(), postId)
+        }
+        setPosts(prevPosts => prevPosts.map(post => post._id === postId ? { ...post, isLiked: !isCurrentlyLiked } : post))
+    }
+
+    const toggleSavePost = async (postId, isCurrentlySaved) => {
+        if (isCurrentlySaved) {
+            await unsavePost(loggedInUser.getUserId(), postId)
+        } else {
+            await savePost(loggedInUser.getUserId(), postId)
+        }
+        setPosts(prevPosts => prevPosts.map(post => post._id === postId ? { ...post, isSaved: !isCurrentlySaved } : post))
     }
 
     if (!username) return <div><NavBar/><h1>Loading...</h1></div>
@@ -84,6 +107,18 @@ function UserPage() {
                         <div style={{ flex: 1 }}>
                             <h2>{post.username}</h2>
                             <p>{post.content}</p>
+                            <button
+                                data-testid="likePostInputButton"
+                                onClick={() => toggleLikePost(post._id, post.isLiked)}
+                            >
+                                {post.isLiked ? 'UnLike' : 'Like'}
+                            </button>
+                            <button
+                                data-testid="savePostInputButton"
+                                onClick={() => toggleSavePost(post._id, post.isSaved)}
+                            >
+                                {post.isSaved ? 'UnSave' : 'Save'}
+                            </button>
                         </div>
                     </div>
                 ))}

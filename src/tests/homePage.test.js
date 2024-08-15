@@ -1,7 +1,5 @@
 import '@testing-library/jest-dom'
-import { elementExists, elementAllExist, RenderHomePage, MockFetchPosts, MockLoggedUser } from './testHelperFunctions'
-import { screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { elementExists, RenderHomePage, MockFetchPosts, MockLoggedUser } from './testHelperFunctions'
 
 // Setup mocks before all tests
 beforeAll(() => {

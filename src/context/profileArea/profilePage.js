@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 // Import services and helper functions
 import { loggedInUser } from '../../services/loggedUser'
 import { getUsername, getStats } from '../../services/userInfoService'
-import { fetchUserPosts, deletePost, editPost } from '../../services/postsService'
+import { fetchUserPosts, deletePost, editPost, isLikedPost, isSavedPost, likePost, savePost, unlikePost, unsavePost } from '../../services/postsService'
 
 // Import jsx components
 import NavBar from '../../components/navBar'
@@ -43,7 +43,12 @@ function ProfilePage(){
 
         const loadPosts = async () => {
             const postsData = await fetchUserPosts(loggedInUser.getUserId())
-            setPosts(postsData.reverse())
+            const postsWithStatus = await Promise.all(postsData.map(async (post) => {
+                const isLiked = await isLikedPost(loggedInUser.getUserId(), post._id)
+                const isSaved = await isSavedPost(loggedInUser.getUserId(), post._id)
+                return { ...post, isLiked: isLiked.status === 'successful', isSaved: isSaved.status === 'successful' }
+            }))
+            setPosts(postsWithStatus.reverse())
         }
 
         const loadStats = async () => {
@@ -74,6 +79,24 @@ function ProfilePage(){
             setEditPostId(null)
             setEditContent('')
         }
+    }
+
+    const toggleLikePost = async (postId, isCurrentlyLiked) => {
+        if (isCurrentlyLiked) {
+            await unlikePost(loggedInUser.getUserId(), postId)
+        } else {
+            await likePost(loggedInUser.getUserId(), postId)
+        }
+        setPosts(prevPosts => prevPosts.map(post => post._id === postId ? { ...post, isLiked: !isCurrentlyLiked } : post))
+    }
+
+    const toggleSavePost = async (postId, isCurrentlySaved) => {
+        if (isCurrentlySaved) {
+            await unsavePost(loggedInUser.getUserId(), postId)
+        } else {
+            await savePost(loggedInUser.getUserId(), postId)
+        }
+        setPosts(prevPosts => prevPosts.map(post => post._id === postId ? { ...post, isSaved: !isCurrentlySaved } : post))
     }
 
     return (
@@ -112,6 +135,18 @@ function ProfilePage(){
                         <div style={{ flex: 1 }}>
                             <h2>{post.username}</h2>
                             <p>{post.content}</p>
+                            <button
+                                data-testid="likePostInputButton"
+                                onClick={() => toggleLikePost(post._id, post.isLiked)}
+                            >
+                                {post.isLiked ? 'UnLike' : 'Like'}
+                            </button>
+                            <button
+                                data-testid="savePostInputButton"
+                                onClick={() => toggleSavePost(post._id, post.isSaved)}
+                            >
+                                {post.isSaved ? 'UnSave' : 'Save'}
+                            </button>
                         </div>
                         {post.user_id === loggedInUser.getUserId() && (
                             <div style={{ marginLeft: 'auto' }}>

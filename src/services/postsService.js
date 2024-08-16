@@ -46,8 +46,8 @@ async function fetchSavedPosts(userId) {
     return Array.isArray(posts) ? posts : []
 }
 
-async function searchUsers(query) {
-    const url = `${BASE_URL}/search?username=${username}}`
+async function searchUsers(userId) {
+    const url = `${BASE_URL}/search?user_id=${userId}`
     const response = await fetch(url, { method: 'GET' })
     const users = await response.json()
     return Array.isArray(users) ? users : []

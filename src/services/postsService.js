@@ -46,11 +46,40 @@ async function fetchSavedPosts(userId) {
     return Array.isArray(posts) ? posts : []
 }
 
-async function searchUsers(userId) {
-    const url = `${BASE_URL}/search?user_id=${userId}`
+async function likePost(userId, postId) {
+    const url = `${BASE_URL}/like?user_id=${userId}&post_id=${postId}`
     const response = await fetch(url, { method: 'GET' })
-    const users = await response.json()
-    return Array.isArray(users) ? users : []
+    return await response.json()
 }
 
-export { fetchPosts, createPost, deletePost, editPost, fetchUserPosts, fetchLikedPosts, fetchSavedPosts, searchUsers  }
+async function unlikePost(userId, postId) {
+    const url = `${BASE_URL}/unlike?user_id=${userId}&post_id=${postId}`
+    const response = await fetch(url, { method: 'GET' })
+    return await response.json()
+}
+
+async function isLikedPost(userId, postId) {
+    const url = `${BASE_URL}/isliked?user_id=${userId}&post_id=${postId}`
+    const response = await fetch(url, { method: 'GET' })
+    return await response.json()
+}
+
+async function savePost(userId, postId) {
+    const url = `${BASE_URL}/save?user_id=${userId}&post_id=${postId}`
+    const response = await fetch(url, { method: 'GET' })
+    return await response.json()
+}
+
+async function unsavePost(userId, postId) {
+    const url = `${BASE_URL}/unsave?user_id=${userId}&post_id=${postId}`
+    const response = await fetch(url, { method: 'GET' })
+    return await response.json()
+}
+
+async function isSavedPost(userId, postId) {
+    const url = `${BASE_URL}/issaved?user_id=${userId}&post_id=${postId}`
+    const response = await fetch(url, { method: 'GET' })
+    return await response.json()
+}
+
+export { fetchPosts, createPost, deletePost, editPost, fetchUserPosts, fetchLikedPosts, fetchSavedPosts, likePost, unlikePost, savePost, unsavePost, isLikedPost, isSavedPost }

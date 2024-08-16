@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { fetchPosts, createPost, deletePost, editPost, searchUsers } from '../services/postsService'
+import { fetchPosts, createPost, deletePost, editPost, unsavePost, savePost, likePost, unlikePost, isLikedPost, isSavedPost } from '../services/postsService'
 import NavBar from '../components/navBar'
 import { loggedInUser } from '../services/loggedUser'
+import { searchUsers } from '../services/userEditService'
 
 function HomePage() {
     const navigate = useNavigate()
@@ -24,7 +25,12 @@ function HomePage() {
 
     const loadPosts = async () => {
         const postsData = await fetchPosts()
-        setPosts(postsData.reverse())
+        const postsWithStatus = await Promise.all(postsData.map(async (post) => {
+            const isLiked = await isLikedPost(loggedInUser.getUserId(), post._id)
+            const isSaved = await isSavedPost(loggedInUser.getUserId(), post._id)
+            return { ...post, isLiked: isLiked.status === 'successful', isSaved: isSaved.status === 'successful' }
+        }))
+        setPosts(postsWithStatus.reverse())
     }
 
     const handlePostMessage = async () => {
@@ -51,14 +57,30 @@ function HomePage() {
     }
 
     const handleSearch = async () => {
-        console.log('Searching for:', username) // Debugging log
         const results = await searchUsers(username)
-        console.log('Search results:', results) // Debugging log
-        setSearchResults(results.data || []) // Ensure results.data is used
+        setSearchResults(results.data || [])
     }
 
     const handleUserClick = (userId) => {
         navigate(`/user/${userId}`)
+    }
+
+    const toggleLikePost = async (postId, isCurrentlyLiked) => {
+        if (isCurrentlyLiked) {
+            await unlikePost(loggedInUser.getUserId(), postId)
+        } else {
+            await likePost(loggedInUser.getUserId(), postId)
+        }
+        setPosts(prevPosts => prevPosts.map(post => post._id === postId ? { ...post, isLiked: !isCurrentlyLiked } : post))
+    }
+
+    const toggleSavePost = async (postId, isCurrentlySaved) => {
+        if (isCurrentlySaved) {
+            await unsavePost(loggedInUser.getUserId(), postId)
+        } else {
+            await savePost(loggedInUser.getUserId(), postId)
+        }
+        setPosts(prevPosts => prevPosts.map(post => post._id === postId ? { ...post, isSaved: !isCurrentlySaved } : post))
     }
 
     return (
@@ -117,6 +139,18 @@ function HomePage() {
                                     <p>{post.content}</p>
                                 </div>
                             )}
+                            <button
+                                data-testid="likePostInputButton"
+                                onClick={() => toggleLikePost(post._id, post.isLiked)}
+                            >
+                                {post.isLiked ? 'UnLike' : 'Like'}
+                            </button>
+                            <button
+                                data-testid="savePostInputButton"
+                                onClick={() => toggleSavePost(post._id, post.isSaved)}
+                            >
+                                {post.isSaved ? 'UnSave' : 'Save'}
+                            </button>
                         </div>
                         {post.user_id === loggedInUser.getUserId() && (
                             <div style={{ marginLeft: 'auto' }}>

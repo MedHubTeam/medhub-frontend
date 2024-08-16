@@ -51,8 +51,10 @@ function HomePage() {
     }
 
     const handleSearch = async () => {
+        console.log('Searching for:', username) // Debugging log
         const results = await searchUsers(username)
-        setSearchResults(results.data)
+        console.log('Search results:', results) // Debugging log
+        setSearchResults(results.data || []) // Ensure results.data is used
     }
 
     const handleUserClick = (userId) => {

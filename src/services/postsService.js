@@ -47,7 +47,11 @@ async function fetchSavedPosts(userId) {
 }
 
 async function searchUsers(userId) {
+<<<<<<< Updated upstream
     const url = `${BASE_URL}/search?user_id=${userId}`
+=======
+    const url = `${BASE_URL}/search?user_id=${userId}}`
+>>>>>>> Stashed changes
     const response = await fetch(url, { method: 'GET' })
     const users = await response.json()
     return Array.isArray(users) ? users : []

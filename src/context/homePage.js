@@ -4,7 +4,7 @@ import { fetchPosts, createPost, deletePost, editPost, unsavePost, savePost, lik
 import NavBar from '../components/navBar'
 import { loggedInUser } from '../services/loggedUser'
 import { searchUsers } from '../services/userEditService'
-
+import '../assets/styles/HomePage.css'
 function HomePage() {
     const navigate = useNavigate()
     const [username, setUsername] = useState('') 
@@ -93,7 +93,9 @@ function HomePage() {
         <div>
             <NavBar />
             <h1>Home Page</h1>
-            <div>
+
+            {}
+            <div className="input-button-container">
                 <input
                     type="text"
                     value={username}
@@ -103,38 +105,39 @@ function HomePage() {
                 />
                 <button onClick={handleSearch} data-testid="searchButton">Search</button>
             </div>
-            <div>
-                {searchResults.length > 0 ? (
-                    <div>
-                        <h2>Search Results:</h2>
-                        {searchResults.map(user => (
-                            <div key={user._id}>
-                                <div key={user._id} onClick={() => handleUserClick(user._id)}>
-                                    <h3>{user.username}</h3>
-                                    <p>{user.proStatus}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div>
-                        <textarea
-                            data-testid="identifierPostInput"
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                            placeholder="What's on your mind?"
-                        />
-                        <button data-testid="submitPostInputButton" onClick={handlePostMessage}>Post</button>
-                    </div>
-                )}
+
+            {}
+            <div className="input-button-container">
+                <textarea
+                    data-testid="identifierPostInput"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="What's on your mind?"
+                />
+                <button data-testid="submitPostInputButton" onClick={handlePostMessage}>Post</button>
             </div>
+
+            {}
+            {searchResults.length > 0 && (
+                <div>
+                    <h2>Search Results:</h2>
+                    {searchResults.map(user => (
+                        <div key={user._id} className="search-result" onClick={() => handleUserClick(user._id)}>
+                            <h3>{user.username}</h3>
+                            <p>{user.proStatus}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {}
             <div>
                 {Array.isArray(posts) && posts.map(post => (
                     <div key={post._id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0', position: 'relative', display: 'flex' }}>
                         <div style={{ flex: 1 }}>
                             {!(post.user_id === loggedInUser.getUserId()) ? (
                                 <div>
-                                    <Link to={`/user/${post.user_id}`} style={{ color:'inherit', 'text-decoration': 'none' }}>
+                                    <Link to={`/user/${post.user_id}`} style={{ color:'inherit', textDecoration: 'none' }}>
                                         <h2>{post.username}</h2>
                                     </Link>
                                     <p>{post.content}</p>

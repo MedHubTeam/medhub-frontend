@@ -1,22 +1,57 @@
 .nav {
-    padding: 10px;
-    background: #333;
-    color: #fff;
-  }
-  
-  .nav ul {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-around;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .nav li {
-    margin: 0 10px;
-  }
-  
-  .nav a {
-    color: #fff;
-    text-decoration: none;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 10px; /* Thinner padding for the navbar */
+  background: #333;
+  color: #fff;
+  z-index: 1000; /* Ensure the navbar stays on top of other elements */
+}
+
+.nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; /* Ensure items are vertically centered */
+  padding: 0;
+  margin: 0;
+}
+
+.nav li {
+  margin: 0 10px;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px; /* Adjust font size for thinner appearance */
+}
+
+.nav button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px; /* Thinner padding for the logout button */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.nav button:hover {
+  background-color: #388e3c;
+}
+
+.nav div[data-testid="liveMemberCountNav"] {
+  padding: 3px 25px;
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 15px;
+  max-width: 115px;
+  text-align: center;
+}
+
+.content {
+  margin-top: 40px;
+}

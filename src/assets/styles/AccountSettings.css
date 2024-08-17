@@ -1,46 +1,93 @@
-.AccountSettingsPage {
-    text-align: center;
-}
-
-.AccountSettingsPage-content {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.user-details {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.user-details label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.user-details input {
-    margin-top: 5px;
-    padding: 8px;
-    font-size: 16px;
-}
-
-.delete-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.delete-button:hover {
-    background-color: darkred;
+/* General Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 body.dark-mode {
     background-color: #121212;
     color: #ffffff;
+}
+
+.nav-bar {
+    background-color: #2e7d32;
+    color: white;
+}
+
+.nav-bar.dark-mode {
+    background-color: #1c1c1c;
+    color: #ffffff;
+}
+
+.AccountSettingsPage {
+    text-align: center;
+}
+
+.AccountSettingsPage.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.user-details input,
+.user-details select,
+.password-change input,
+input[type="text"],
+textarea {
+    background-color: #f0f0f0;
+    color: #000000;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+body.dark-mode .user-details input,
+body.dark-mode .user-details select,
+body.dark-mode .password-change input,
+body.dark-mode input[type="text"],
+body.dark-mode textarea {
+    background-color: #4a4a4a;
+    color: #ffffff;
+    border: 1px solid #555555;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: #bbbbbb;
+}
+
+div {
+    background-color: #f9f9f9;
+    color: #000000;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+body.dark-mode div {
+    background-color: #1c1c1c;
+    color: #ffffff;
+}
+
+button {
+    background-color: #2e7d32;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+body.dark-mode button {
+    background-color: #4caf50;
+    color: #ffffff;
+}
+
+button:hover {
+    background-color: #1b5e20;
+}
+
+body.dark-mode button:hover {
+    background-color: #388e3c;
 }

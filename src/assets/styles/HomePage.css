@@ -1,0 +1,178 @@
+/* General Home Page Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+h1, h2, h3 {
+    color: #2e7d32;
+}
+
+h1.dark-mode, h2.dark-mode, h3.dark-mode {
+    color: #4caf50;
+}
+
+input[type="text"], textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-right: 10px;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+input[type="text"].dark-mode, textarea.dark-mode {
+    background-color: #333333;
+    color: #ffffff;
+    border: 1px solid #555555;
+}
+
+button {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+button:hover {
+    background-color: #1b5e20;
+}
+
+button.dark-mode {
+    background-color: #4caf50;
+}
+
+button.dark-mode:hover {
+    background-color: #388e3c;
+}
+
+div[data-testid="identifierPostInput"] {
+    margin-top: 20px;
+}
+
+div {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    padding: 15px;
+    color: #000000;
+}
+
+div.dark-mode {
+    background-color: #1c1c1c;
+    color: #ffffff;
+}
+
+div[data-testid="likePostInputButton"],
+div[data-testid="savePostInputButton"] {
+    background-color: #2e7d32;
+    color: #ffffff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+div[data-testid="likePostInputButton"].dark-mode,
+div[data-testid="savePostInputButton"].dark-mode {
+    background-color: #4caf50;
+}
+
+div[data-testid="likePostInputButton"]:hover,
+div[data-testid="savePostInputButton"]:hover {
+    background-color: #1b5e20;
+}
+
+body.dark-mode .search-result {
+    background-color: #1c1c1c;
+    color: #ffffff;
+}
+
+.search-result p {
+    margin: 0;
+    color: #555;
+}
+
+body.dark-mode .search-result p {
+    color: #ffffff;
+}
+
+/* Search Result Styling */
+.search-result {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+}
+
+.search-result.dark-mode {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 1px solid #555555;
+}
+
+.search-result h3 {
+    margin: 0;
+    margin-right: 15px;
+    font-size: 1.2em;
+    color: #2e7d32;
+}
+
+.search-result h3.dark-mode {
+    color: #4caf50;
+}
+
+.search-result p {
+    margin: 0;
+    color: #555;
+}
+
+.search-result p.dark-mode {
+    color: #bbbbbb;
+}
+
+.input-button-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2e7d32;
+    color: white;
+    padding: 15px;
+    z-index: 1000;
+}
+
+.nav-bar.dark-mode {
+    background-color: #1c1c1c;
+    color: #ffffff;
+}
+
+.content {
+    margin-top: 70px;
+}
+
+.content.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}

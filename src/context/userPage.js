@@ -25,7 +25,7 @@ function UserPage() {
         if (userId === loggedInUser.getUserId()) {
             navigate('/profile')
         }
-    }, [navigate])
+    }, [navigate, userId])
 
     useEffect(() => {
         const fetchUserProfile = async () => {

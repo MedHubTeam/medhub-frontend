@@ -57,11 +57,13 @@ function HomePage() {
     }
 
     const handleSearch = async () => {
-        const results = await searchUsers(username)
-        if (results.status === 'successful') {
-            setSearchResults(results.data)
-        } else {
-            alert('Search for user has failed...')
+        if (username) {
+            const results = await searchUsers(username)
+            if (results.status === 'successful') {
+                setSearchResults(results.data)
+            } else {
+                alert('Search for user has failed...')
+            }
         }
     }
 
@@ -109,7 +111,7 @@ function HomePage() {
                             <div key={user._id}>
                                 <div key={user._id} onClick={() => handleUserClick(user._id)}>
                                     <h3>{user.username}</h3>
-                                    <p>{user.profession}</p>
+                                    <p>{user.proStatus}</p>
                                 </div>
                             </div>
                         ))}

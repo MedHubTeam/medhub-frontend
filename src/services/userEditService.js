@@ -50,7 +50,7 @@ async function updatePassword(id, oldPassword, newPassword) {
 
 
 async function searchUsers(input) {
-    const url = `https://medhub-backend.onrender.com/search?input=${input}`
+    const url = `https://medhub-backend.onrender.com/user/get/search?input=${input}`
     const response = await fetch(url, { method: 'GET' })
     return await response.json()
 }

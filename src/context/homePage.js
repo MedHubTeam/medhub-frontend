@@ -58,7 +58,11 @@ function HomePage() {
 
     const handleSearch = async () => {
         const results = await searchUsers(username)
-        setSearchResults(results.data || [])
+        if (results.status === 'successful') {
+            setSearchResults(results.data)
+        } else {
+            alert('Search for user has failed...')
+        }
     }
 
     const handleUserClick = (userId) => {

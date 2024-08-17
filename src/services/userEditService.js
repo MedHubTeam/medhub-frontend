@@ -49,11 +49,10 @@ async function updatePassword(id, oldPassword, newPassword) {
 }
 
 
-async function searchUsers(userId) {
-    const url = `https://medhub-backend.onrender.com/search?user_id=${userId}`
+async function searchUsers(input) {
+    const url = `https://medhub-backend.onrender.com/search?input=${input}`
     const response = await fetch(url, { method: 'GET' })
-    const users = await response.json()
-    return Array.isArray(users) ? users : []
+    return await response.json()
 }
 
 

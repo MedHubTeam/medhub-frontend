@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../../assets/styles/AccountSettings.css'
 import NavBar from '../../components/navBar' 
 import { confirmAlert } from 'react-confirm-alert'
-import { deleteUser, updateUserDetails, updatePassword } from '../../services/userEditService'
+import { deleteUser, updateUserDetails, updatePassword, toggleTheme } from '../../services/userEditService'
 import { getUsername, getEmail, getProfession } from '../../services/userInfoService'
 import { loggedInUser } from '../../services/loggedUser'
 import { useNavigate } from 'react-router-dom'
@@ -13,6 +13,7 @@ function AccountSettingsPage({ initialUsername = null, initialEmail = null, init
     const [email, setEmail] = useState(initialEmail)
     const [profession, setProfession] = useState(initialProfession)
     const [isEditing, setIsEditing] = useState(false)
+    const [darkMode, setDarkMode] = useState(false)
     const navigate = useNavigate()
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setNewPassword] = useState('')
@@ -47,10 +48,31 @@ function AccountSettingsPage({ initialUsername = null, initialEmail = null, init
             await fetchUsername()
             await fetchEmail()
             await fetchProfession()
+            await fetchTheme()
+        }
+
+        const fetchTheme = async () => {
+            const response = await fetch(`https://medhub-backend.onrender.com/getTheme?id=${loggedInUser.getUserId()}`)
+            if (response.ok) {
+                const data = await response.json()
+                setDarkMode(data.dark)
+            }
         }
 
         fetchUserDetails()
+        fetchTheme()
     }, [navigate])
+
+    const handleToggleTheme = async () => {
+        const newDarkMode = !darkMode
+        const response = await toggleTheme(loggedInUser.getUserId(), newDarkMode)
+        if (response.status === 'successful') {
+            setDarkMode(newDarkMode)
+            document.body.classList.toggle('dark-mode', newDarkMode)
+        } else {
+            alert('Failed to update theme.')
+        }
+    }
 
     const handleSave = async () => {
         const userId = loggedInUser.getUserId()
@@ -59,14 +81,14 @@ function AccountSettingsPage({ initialUsername = null, initialEmail = null, init
         if (username) {
             updatePromises.push(updateUserDetails(userId, 'username', username))
         }
-    
+
         if (email) {
             updatePromises.push(updateUserDetails(userId, 'email', email))
         }
-    
+
         if (profession) {
             updatePromises.push(updateUserDetails(userId, 'profession', profession))
-        }    
+        }
 
         try {
             const responses = await Promise.all(updatePromises)
@@ -88,6 +110,7 @@ function AccountSettingsPage({ initialUsername = null, initialEmail = null, init
     const handleEdit = () => {
         setIsEditing(true)
     }
+
     const handleChangePassword = async () => {
         if (!oldPassword || !newPassword) {
             alert('Please enter both old and new passwords.')
@@ -96,7 +119,7 @@ function AccountSettingsPage({ initialUsername = null, initialEmail = null, init
 
         try {
             const response = await updatePassword(loggedInUser.getUserId(), oldPassword, newPassword)
-            if (response.status==='successful') {
+            if (response.status === 'successful') {
                 alert('Password changed successfully.')
                 setOldPassword('')
                 setNewPassword('')
@@ -121,9 +144,8 @@ function AccountSettingsPage({ initialUsername = null, initialEmail = null, init
                         if (response['status'] === 'successful') {
                             loggedInUser.logout()
                             navigate('/')
-                        }
-                        else{
-                            alert('failed to delete user.')
+                        } else {
+                            alert('Failed to delete user.')
                         }
                     }
                 },
@@ -138,7 +160,7 @@ function AccountSettingsPage({ initialUsername = null, initialEmail = null, init
     if (!profession) return <div><NavBar /><h1>Loading...</h1></div>
 
     return (
-        <div className="AccountSettingsPage">
+        <div className={`AccountSettingsPage ${darkMode ? 'dark-mode' : ''}`}>
             <header className="AccountSettingsPage-header">
                 <NavBar />
                 <form onSave={handleSave}></form>
@@ -215,6 +237,9 @@ function AccountSettingsPage({ initialUsername = null, initialEmail = null, init
                     <button data-testid="editButton" onClick={handleEdit}>Edit</button>
                 )}
                 <button data-testid="deleteUserButton" onClick={deleteOnClick}>Delete User</button>
+                <button onClick={handleToggleTheme}>
+                    {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                </button>
             </header>
         </div>
     )

@@ -27,7 +27,16 @@ export default function LoginForm() {
         if (loginResponse) {
             if (loginResponse.status === 'successful') {
                 loggedInUser.setUserLogin(loginResponse)
-                navigate('/home')
+                const applyTheme = async () => {
+                    const response = await fetch(`https://medhub-backend.onrender.com/getTheme?id=${loggedInUser.getUserId()}`)
+                    if (response.ok) {
+                        const data = await response.json()
+                        document.body.classList.toggle('dark-mode', data.dark)
+                    }
+                }
+                applyTheme().then(() => {
+                    navigate('/home')
+                })
             } else {
                 alert('Wrong login credentials')
             }

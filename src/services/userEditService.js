@@ -55,6 +55,14 @@ async function searchUsers(input) {
     return await response.json()
 }
 
+async function toggleTheme(id, darkMode) {
+    const url = `https://medhub-backend.onrender.com/setTheme?id=${id}&dark=${darkMode}`
+    const response = await fetch(url, {
+        method: 'POST'
+    })
+    return await response.json()
+}
 
-module.exports = { deleteUser, updateUserDetails, updatePassword, searchUsers }
+
+module.exports = { deleteUser, updateUserDetails, updatePassword, searchUsers, toggleTheme }
 

@@ -64,7 +64,6 @@ div[data-testid="identifierPostInput"] {
 div {
     margin-bottom: 20px;
     border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
     padding: 15px;
     color: #000000;

@@ -160,87 +160,89 @@ function AccountSettingsPage({ initialUsername = null, initialEmail = null, init
     if (!profession) return <div><NavBar /><h1>Loading...</h1></div>
 
     return (
-        <div className={`AccountSettingsPage ${darkMode ? 'dark-mode' : ''}`}>
-            <header className="AccountSettingsPage-header">
-                <NavBar />
-                <form onSave={handleSave}></form>
-                <div className="user-details">
-                    <label>
-                        Username:
-                        <input
-                            type="text"
-                            id="identifier"
-                            data-testid="identifierRegisterInput"
-                            placeholder="Enter a valid username"
-                            required
-                            pattern="^[a-zA-Z0-9._-]{5,16}$"
-                            title="Username must be between 5 and 16 characters long and can include letters (both upper and lower case), numbers, periods (.), underscores (_), and hyphens (-)."
-                            value={username}
-                            onChange={function(event) {
-                                setUsername(event.target.value)}}
-                            disabled={!isEditing}
-                        />
-                    </label>
-                    <label>
-                        Email:
-                        <input
-                            type="text"
-                            id="email"
-                            data-testid="emailRegisterInput"
-                            placeholder="Enter a valid email address"
-                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-                            title="Please enter a valid email address."
-                            value={email}
-                            onChange={function(event) { setEmail(event.target.value) }}
-                            disabled={!isEditing}
-                        />
-                    </label>
-                    <label>
-                        Profession:
-                        <select id="userProfession" onChange={function(event) { setProfession(event.target.value) }} disabled={!isEditing} data-testid="userProfessionRegisterInput" required>
-                            <option value="" disabled selected>{profession}</option>
-                            <option value="Doctor">Doctor</option>
-                            <option value="Physician">Physician</option>
-                            <option value="Surgeon">Surgeon</option>
-                            <option value="Nurse">Nurse</option>
-                            <option value="Pharmacist">Pharmacist</option>
-                            <option value="Dentist">Dentist</option>
-                            <option value="Psychologist">Psychologist</option>
-                            <option value="Physical Therapist">Physical Therapist</option>
-                        </select>
-                    </label>
-                </div>
-                <div className="password-change">
-                    <label>
-                        Old Password:
-                        <input
-                            type="password"
-                            data-testid="oldPasswordInput"
-                            value={oldPassword}
-                            onChange={(e) => setOldPassword(e.target.value)}
-                        />
-                    </label>
-                    <label>
-                        New Password:
-                        <input
-                            type="password"
-                            data-testid="newPasswordInput"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                        />
-                    </label>
-                    <button data-testid="changePasswordButton" onClick={handleChangePassword}>Change Password</button>
-                </div>
-                {isEditing ? (
-                    <button data-testid="saveButton" onClick={handleSave}>Save</button>
-                ) : (
-                    <button data-testid="editButton" onClick={handleEdit}>Edit</button>
-                )}
-                <button data-testid="deleteUserButton" onClick={deleteOnClick}>Delete User</button>
-                <button onClick={handleToggleTheme}>
-                    {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-                </button>
-            </header>
+        <div>
+            <NavBar />
+            <div className={`AccountSettingsPage ${darkMode ? 'dark-mode' : ''}`} style={{ marginTop: '50px' }}>
+                <header className="AccountSettingsPage-header">
+                    <form onSave={handleSave}></form>
+                    <div className="user-details">
+                        <label>
+                            Username:
+                            <input
+                                type="text"
+                                id="identifier"
+                                data-testid="identifierRegisterInput"
+                                placeholder="Enter a valid username"
+                                required
+                                pattern="^[a-zA-Z0-9._-]{5,16}$"
+                                title="Username must be between 5 and 16 characters long and can include letters (both upper and lower case), numbers, periods (.), underscores (_), and hyphens (-)."
+                                value={username}
+                                onChange={function(event) {
+                                    setUsername(event.target.value)}}
+                                disabled={!isEditing}
+                            />
+                        </label>
+                        <label>
+                            Email:
+                            <input
+                                type="text"
+                                id="email"
+                                data-testid="emailRegisterInput"
+                                placeholder="Enter a valid email address"
+                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                title="Please enter a valid email address."
+                                value={email}
+                                onChange={function(event) { setEmail(event.target.value) }}
+                                disabled={!isEditing}
+                            />
+                        </label>
+                        <label>
+                            Profession:
+                            <select id="userProfession" onChange={function(event) { setProfession(event.target.value) }} disabled={!isEditing} data-testid="userProfessionRegisterInput" required>
+                                <option value="" disabled selected>{profession}</option>
+                                <option value="Doctor">Doctor</option>
+                                <option value="Physician">Physician</option>
+                                <option value="Surgeon">Surgeon</option>
+                                <option value="Nurse">Nurse</option>
+                                <option value="Pharmacist">Pharmacist</option>
+                                <option value="Dentist">Dentist</option>
+                                <option value="Psychologist">Psychologist</option>
+                                <option value="Physical Therapist">Physical Therapist</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div className="password-change">
+                        <label>
+                            Old Password:
+                            <input
+                                type="password"
+                                data-testid="oldPasswordInput"
+                                value={oldPassword}
+                                onChange={(e) => setOldPassword(e.target.value)}
+                            />
+                        </label>
+                        <label>
+                            New Password:
+                            <input
+                                type="password"
+                                data-testid="newPasswordInput"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                            />
+                        </label>
+                        <button data-testid="changePasswordButton" onClick={handleChangePassword}>Change Password</button>
+                    </div>
+                    {isEditing ? (
+                        <button data-testid="saveButton" onClick={handleSave}>Save</button>
+                    ) : (
+                        <button data-testid="editButton" onClick={handleEdit}>Edit</button>
+                    )}
+                    <button data-testid="deleteUserButton" onClick={deleteOnClick}>Delete User</button>
+                    <button onClick={handleToggleTheme}>
+                        {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                    </button>
+                </header>
+            </div>
         </div>
     )
 }
